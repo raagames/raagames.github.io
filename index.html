@@ -22,13 +22,23 @@
     <title>Welcome to raagames2</title>
     <link rel="stylesheet" type="text/css" href="welcomepage.css">
     <link rel="stylesheet" type="text/css" href="styles.css"> <!-- Linking the CSS file -->
+    <script>
+        function checkPassword() {
+            var password = prompt("Please enter the password:");
+            if (password === "1020") {
+                window.location.href = "https://raahilaalam.github.io/raagames/";
+            } else {
+                alert("Incorrect password. Please try again.");
+            }
+        }
+    </script>
 </head>
 <body>
     <div class="title_homepage">
-        <h1>Welcome to raagames2. I made this new screen, so it can be like a new feature. Some of the games were by Azyan's ideas, please show it to your friends. Enjoy! Thank you very much!</h1>
+        <h1>Welcome to raagames2. I added a password,so ask me for it,even Anay.Please show it to your friends. Enjoy! Thank you very much!</h1>
     </div>
     <div class="select_homepage">
-        <a href="https://raahilaalam.github.io/raagames/"><button class="button_playgames">Play Games Built By Raahil</button></a>
+        <a href="javascript:void(0);" onclick="checkPassword()"><button class="button_playgames">Play Games Built By Raahil</button></a>
         <a href="https://discord.com/invite/MxS3pbYwUj"><button class="button_joindiscord">Join team (blocked by iboss)</button></a>
     </div>
 </body>
