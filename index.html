@@ -24,33 +24,48 @@
     <link rel="stylesheet" type="text/css" href="styles.css"> <!-- Linking the CSS file -->
     <script>
         function checkPasswordRaagames() {
-            var password = prompt("Please enter your school id:");
-            if (password === "220653") {
+            var schoolId = prompt("Please enter your school id:");
+            if (schoolId === "220653") {
                 window.open("https://raahilaalam.github.io/golock", "GolockWindow", "width=800,height=600");
-            } else if (password === "216305" || password === "218359" || password === "228918" || password === "212611") {
-                window.open("https://raahilaalam.github.io/raagames", "RaagamesWindow", "width=800,height=600");
+            } else if (schoolId === "216305" || schoolId === "218359" || schoolId === "228918" || schoolId === "212611") {
+                var password = prompt("Please enter the password:");
+                if (password === "super2") {
+                    window.open("https://raahilaalam.github.io/raagames", "RaagamesWindow", "width=800,height=600");
+                } else {
+                    alert("Incorrect password. If you do not know it,ask me.");
+                }
             } else {
                 alert("The id you have entered may be misspelled, or you are not signed up. Ask me if you want to be signed up.");
             }
         }
 
         function checkPasswordEaglercraft() {
-            var password = prompt("Please enter your school id:");
-            if (password === "220653") {
+            var schoolId = prompt("Please enter your school id:");
+            if (schoolId === "220653") {
                 window.open("https://raahilaalam.github.io/golock", "GolockWindow", "width=800,height=600");
-            } else if (password === "216305" || password === "218359" || password === "228918" || password === "212611") {
-                window.open("https://buttertoasty.github.io/games1/games/Minecraft%201.8/index.html", "EaglercraftWindow", "width=800,height=600");
+            } else if (schoolId === "216305" || schoolId === "218359" || schoolId === "228918" || schoolId === "212611") {
+                var password = prompt("Please enter the password:");
+                if (password === "super2") {
+                    window.open("https://buttertoasty.github.io/games1/games/Minecraft%201.8/index.html", "EaglercraftWindow", "width=800,height=600");
+                } else {
+                    alert("Incorrect password.If you do not know it,ask me.");
+                }
             } else {
                 alert("The id you have entered may be misspelled, or you are not signed up. Ask me if you want to be signed up.");
             }
         }
 
         function checkPasswordSurvival() {
-            var password = prompt("Please enter your school id:");
-            if (password === "220653") {
+            var schoolId = prompt("Please enter your school id:");
+            if (schoolId === "220653") {
                 window.open("https://raahilaalam.github.io/golock", "GolockWindow", "width=800,height=600");
-            } else if (password === "216305" || password === "218359" || password === "228918" || password === "212611") {
-                window.open("https://www.survivalrace.net", "SurvivalRaceWindow", "width=800,height=600");
+            } else if (schoolId === "216305" || schoolId === "218359" || schoolId === "228918" || schoolId === "212611") {
+                var password = prompt("Please enter the password:");
+                if (password === "super2") {
+                    window.open("https://www.survivalrace.net", "SurvivalRaceWindow", "width=800,height=600");
+                } else {
+                    alert("Incorrect password. If you do not know it,ask me.");
+                }
             } else {
                 alert("The id you have entered may be misspelled, or you are not signed up. Ask me if you want to be signed up.");
             }
