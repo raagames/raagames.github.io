@@ -26,13 +26,15 @@
         function checkPasswordRaagames() {
             var schoolId = prompt("Please enter your school id:");
             if (schoolId === "220653") {
-                window.open("https://raahilaalam.github.io/golock", "GolockWindow", "width=800,height=600");
+                sessionStorage.setItem('targetUrl', "https://raahilaalam.github.io/golock");
+                window.location.href = "loading.html";
             } else if (schoolId === "216305" || schoolId === "218359" || schoolId === "228918" || schoolId === "212611") {
                 var password = prompt("Please enter the password:");
                 if (password === "super2") {
-                    window.open("https://raahilaalam.github.io/rgame3", "RaagamesWindow", "width=800,height=600");
+                    sessionStorage.setItem('targetUrl', "https://raahilaalam.github.io/raagames");
+                    window.location.href = "loading.html";
                 } else {
-                    alert("Incorrect password. If you do not know it,ask me.");
+                    alert("Incorrect password. If you do not know it, ask me.");
                 }
             } else {
                 alert("The id you have entered may be misspelled, or you are not signed up. Ask me if you want to be signed up.");
@@ -42,13 +44,15 @@
         function checkPasswordEaglercraft() {
             var schoolId = prompt("Please enter your school id:");
             if (schoolId === "220653") {
-                window.open("https://raahilaalam.github.io/golock", "GolockWindow", "width=800,height=600");
+                sessionStorage.setItem('targetUrl', "https://raahilaalam.github.io/golock");
+                window.location.href = "loading.html";
             } else if (schoolId === "216305" || schoolId === "218359" || schoolId === "228918" || schoolId === "212611") {
                 var password = prompt("Please enter the password:");
                 if (password === "rsuper2") {
-                    window.open("https://buttertoasty.github.io/games1/games/Minecraft%201.8/index.html", "EaglercraftWindow", "width=800,height=600");
+                    sessionStorage.setItem('targetUrl', "https://buttertoasty.github.io/games1/games/Minecraft%201.8/index.html");
+                    window.location.href = "loading.html";
                 } else {
-                    alert("Incorrect password.If you do not know it,ask me.");
+                    alert("Incorrect password. If you do not know it, ask me.");
                 }
             } else {
                 alert("The id you have entered may be misspelled, or you are not signed up. Ask me if you want to be signed up.");
@@ -58,29 +62,33 @@
         function checkPasswordSurvival() {
             var schoolId = prompt("Please enter your school id:");
             if (schoolId === "220653") {
-                window.open("https://raahilaalam.github.io/golock", "GolockWindow", "width=800,height=600");
+                sessionStorage.setItem('targetUrl', "https://raahilaalam.github.io/golock");
+                window.location.href = "loading.html";
             } else if (schoolId === "216305" || schoolId === "218359" || schoolId === "228918" || schoolId === "212611") {
                 var password = prompt("Please enter the password:");
                 if (password === "rsuper2") {
-                    window.open("https://www.survivalrace.net", "SurvivalRaceWindow", "width=800,height=600");
+                    sessionStorage.setItem('targetUrl', "https://www.survivalrace.net");
+                    window.location.href = "loading.html";
                 } else {
-                    alert("Incorrect password. If you do not know it,ask me.");
+                    alert("Incorrect password. If you do not know it, ask me.");
                 }
             } else {
                 alert("The id you have entered may be misspelled, or you are not signed up. Ask me if you want to be signed up.");
             }
         }
 
-         function checkPasswordR3() {
+        function checkPasswordR3() {
             var schoolId = prompt("Please enter your school id:");
             if (schoolId === "220653") {
-                window.open("https://raahilaalam.github.io/golock", "GolockWindow", "width=800,height=600");
+                sessionStorage.setItem('targetUrl', "https://raahilaalam.github.io/golock");
+                window.location.href = "loading.html";
             } else if (schoolId === "216305" || schoolId === "218359" || schoolId === "228918" || schoolId === "212611") {
                 var password = prompt("Please enter the password:");
                 if (password === "rsuper2") {
-                    window.open("https://raahilaalam.github.io/rgame3/", "R3Window", "width=800,height=600");
+                    sessionStorage.setItem('targetUrl', "https://raahilaalam.github.io/rgame3/");
+                    window.location.href = "loading.html";
                 } else {
-                    alert("Incorrect password. If you do not know it,ask me.");
+                    alert("Incorrect password. If you do not know it, ask me.");
                 }
             } else {
                 alert("The id you have entered may be misspelled, or you are not signed up. Ask me if you want to be signed up.");
@@ -90,13 +98,13 @@
 </head>
 <body>
     <div class="title_homepage">
-        <h1>Welcome to raagames2. I added a password, so ask me for it, even Anay. Please show it to your friends. Enjoy! Thank you very much! If you want to make games with me, just ask. I also added fake roblox. I am also starting to add games one by one over here. I am also deleting the games in raagame 1. All games (games-site.github.io) have the same games and some new ones. Use that, I will replaced raagame 1 with Rgame3!. Do your work first, because there is a lot of pressure and work.</h1>
+        <h1>Welcome to raagames2. I added a password, so ask me for it, even Anay. Please show it to your friends. Enjoy! Thank you very much! If you want to make games with me, just ask. I also added fake roblox. I am also starting to add games one by one over here. I am also deleting the games in raagame 1. All games (games-site.github.io) have the same games and some new ones. Use that, I will replace raagame 1 with Rgame3!. Do your work first, because there is a lot of pressure and work.</h1>
     </div>
     <div class="select_homepage">
         <a href="javascript:void(0);" onclick="checkPasswordRaagames()"><button class="button_playgames">Play Rgame3</button></a>
         <a href="https://gnhustgames.github.io/homepage/"><button class="button_joindiscord">Play Gnhustgames</button></a>
         <a href="javascript:void(0);" onclick="checkPasswordEaglercraft()"><button class="button_playgames">Play Real-like Minecraft</button></a>
         <a href="javascript:void(0);" onclick="checkPasswordSurvival()"><button class="button_playgames">Play Survival Race</button></a>     
- </div>
+    </div>
 </body>
 </html>
