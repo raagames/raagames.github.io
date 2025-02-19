@@ -5,8 +5,9 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BTL6D79ZZ4"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){ dataLayer.push(arguments); }
+        function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
+
         gtag('config', 'G-BTL6D79ZZ4');
     </script>
     <!-- Google Adsense -->
@@ -23,16 +24,21 @@
     <link rel="stylesheet" type="text/css" href="welcomepage.css">
     <link rel="stylesheet" type="text/css" href="styles.css"> <!-- Linking the CSS file -->
     <script>
+        function openWithLoading(targetUrl) {
+            var loadingWindow = window.open("loading.html", "LoadingWindow", "width=800,height=600");
+            setTimeout(function() {
+                loadingWindow.location.href = targetUrl;
+            }, 3000); // Adjust the delay as needed
+        }
+
         function checkPasswordRaagames() {
             var schoolId = prompt("Please enter your school id:");
             if (schoolId === "220653") {
-                sessionStorage.setItem('targetUrl', "https://raahilaalam.github.io/golock");
-                window.location.href = "loading.html";
+                openWithLoading("https://raahilaalam.github.io/golock");
             } else if (schoolId === "216305" || schoolId === "218359" || schoolId === "228918" || schoolId === "212611") {
                 var password = prompt("Please enter the password:");
                 if (password === "super2") {
-                    sessionStorage.setItem('targetUrl', "https://raahilaalam.github.io/raagames");
-                    window.location.href = "loading.html";
+                    openWithLoading("https://raahilaalam.github.io/raagames");
                 } else {
                     alert("Incorrect password. If you do not know it, ask me.");
                 }
@@ -44,13 +50,11 @@
         function checkPasswordEaglercraft() {
             var schoolId = prompt("Please enter your school id:");
             if (schoolId === "220653") {
-                sessionStorage.setItem('targetUrl', "https://raahilaalam.github.io/golock");
-                window.location.href = "loading.html";
+                openWithLoading("https://raahilaalam.github.io/golock");
             } else if (schoolId === "216305" || schoolId === "218359" || schoolId === "228918" || schoolId === "212611") {
                 var password = prompt("Please enter the password:");
                 if (password === "rsuper2") {
-                    sessionStorage.setItem('targetUrl', "https://buttertoasty.github.io/games1/games/Minecraft%201.8/index.html");
-                    window.location.href = "loading.html";
+                    openWithLoading("https://buttertoasty.github.io/games1/games/Minecraft%201.8/index.html");
                 } else {
                     alert("Incorrect password. If you do not know it, ask me.");
                 }
@@ -62,13 +66,11 @@
         function checkPasswordSurvival() {
             var schoolId = prompt("Please enter your school id:");
             if (schoolId === "220653") {
-                sessionStorage.setItem('targetUrl', "https://raahilaalam.github.io/golock");
-                window.location.href = "loading.html";
+                openWithLoading("https://raahilaalam.github.io/golock");
             } else if (schoolId === "216305" || schoolId === "218359" || schoolId === "228918" || schoolId === "212611") {
                 var password = prompt("Please enter the password:");
                 if (password === "rsuper2") {
-                    sessionStorage.setItem('targetUrl', "https://www.survivalrace.net");
-                    window.location.href = "loading.html";
+                    openWithLoading("https://www.survivalrace.net");
                 } else {
                     alert("Incorrect password. If you do not know it, ask me.");
                 }
@@ -80,13 +82,11 @@
         function checkPasswordR3() {
             var schoolId = prompt("Please enter your school id:");
             if (schoolId === "220653") {
-                sessionStorage.setItem('targetUrl', "https://raahilaalam.github.io/golock");
-                window.location.href = "loading.html";
+                openWithLoading("https://raahilaalam.github.io/golock");
             } else if (schoolId === "216305" || schoolId === "218359" || schoolId === "228918" || schoolId === "212611") {
                 var password = prompt("Please enter the password:");
                 if (password === "rsuper2") {
-                    sessionStorage.setItem('targetUrl', "https://raahilaalam.github.io/rgame3/");
-                    window.location.href = "loading.html";
+                    openWithLoading("https://raahilaalam.github.io/rgame3/");
                 } else {
                     alert("Incorrect password. If you do not know it, ask me.");
                 }
