@@ -9,18 +9,13 @@
         gtag('js', new Date());
         gtag('config', 'G-BTL6D79ZZ4');
     </script>
-    <!-- Meta tags and favicon -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to Raagame2</title>
     <link rel="icon" href="https://raahilaalam.github.io/raagame2/icon.png">
-
-    <!-- Fonts and CSS -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="welcomepage.css">
     <link rel="stylesheet" type="text/css" href="styles.css">
-
-    <!-- Custom Cursor CSS -->
     <style>
         body {
             cursor: none; /* Hide the default cursor */
@@ -37,8 +32,10 @@
             z-index: 9999; /* Ensure the cursor stays on top */
         }
     </style>
-
-    <!-- Your existing scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
     <script>
         function checkGolockAccess() {
             if (localStorage.getItem('golockAccess') === 'true') {
@@ -93,34 +90,45 @@
     <!-- Custom Cursor Element -->
     <div id="custom-cursor"></div>
 
-    <!-- Custom Cursor Script -->
+    <!-- Hand Detection Script -->
     <script>
         const cursor = document.getElementById('custom-cursor');
-        let angle = 0;
+        
+        const videoElement = document.createElement('video');
+        const canvasElement = document.createElement('canvas');
+        const canvasCtx = canvasElement.getContext('2d');
+        document.body.appendChild(videoElement);
+        document.body.appendChild(canvasElement);
 
-        function moveCursor() {
-            // Define the movement pattern parameters
-            const radius = 100; // Radius of the circular path
-            const centerX = window.innerWidth / 2;
-            const centerY = window.innerHeight / 2;
+        const hands = new Hands({
+            locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
+        });
+        hands.setOptions({
+            maxNumHands: 1,
+            modelComplexity: 1,
+            minDetectionConfidence: 0.5,
+            minTrackingConfidence: 0.5
+        });
+        hands.onResults((results) => {
+            canvasCtx.save();
+            canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+            if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
+                const landmarks = results.multiHandLandmarks[0];
+                const indexFingerTip = landmarks[8];
+                cursor.style.left = `${indexFingerTip.x * window.innerWidth}px`;
+                cursor.style.top = `${indexFingerTip.y * window.innerHeight}px`;
+            }
+            canvasCtx.restore();
+        });
 
-            // Calculate the new cursor position
-            const x = centerX + radius * Math.cos(angle);
-            const y = centerY + radius * Math.sin(angle);
-
-            // Apply the position to the custom cursor
-            cursor.style.left = x + 'px';
-            cursor.style.top = y + 'px';
-
-            // Increment the angle to animate the movement
-            angle += 0.02; // Adjust for speed
-
-            // Continue the animation
-            requestAnimationFrame(moveCursor);
-        }
-
-        // Start the cursor animation
-        moveCursor();
+        const camera = new Camera(videoElement, {
+            onFrame: async () => {
+                await hands.send({ image: videoElement });
+            },
+            width: 640,
+            height: 480
+        });
+        camera.start();
     </script>
 </body>
 </html>
