@@ -1,24 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Existing head content -->
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BTL6D79ZZ4"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'G-BTL6D79ZZ4');
-    </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Raagame2</title>
-    <link rel="icon" href="https://raahilaalam.github.io/raagame2/icon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="welcomepage.css">
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <!-- ... [Your existing head content remains unchanged] ... -->
+
+    <!-- Include MediaPipe and necessary scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+
+    <!-- Custom Cursor Style -->
     <style>
         body {
             cursor: none; /* Hide the default cursor */
+            margin: 0;
+            overflow: hidden;
         }
         #custom-cursor {
             position: absolute;
@@ -31,95 +28,108 @@
             transform: translate(-50%, -50%);
             z-index: 9999; /* Ensure the cursor stays on top */
         }
+        /* Hide the video and canvas elements */
+        #input_video, #output_canvas {
+            display: none;
+        }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
-    <script>
-        function checkGolockAccess() {
-            if (localStorage.getItem('golockAccess') === 'true') {
-                window.location.href = "https://raahilaalam.github.io/golock";
-            }
-        }
-        window.onload = function() {
-            checkGolockAccess();
-        };
-        function openWithLoading(targetUrl) {
-            var loadingWindow = window.open("loading.html", "LoadingWindow", "width=800,height=600");
-            setTimeout(function () {
-                loadingWindow.location.href = targetUrl;
-            }, 3000); // Adjust the delay as needed
-        }
-        function checkPasswordRaagames() {
-            var schoolId = prompt("Please enter your school ID:");
-            if (schoolId === "220653") {
-                localStorage.setItem('golockAccess', 'true');
-                openWithLoading("https://raahilaalam.github.io/golock");
-            } else if (schoolId === "216305" || schoolId === "218359" || schoolId === "228918" || schoolId === "212611") {
-                var password = prompt("Please enter the password:");
-                if (password === "super2") {
-                    openWithLoading("https://raahilaalam.github.io/raagames");
-                } else {
-                    alert("Incorrect password. If you do not know it, ask me.");
-                }
-            } else {
-                alert("The ID you have entered may be misspelled, or you are not signed up. Ask me if you want to be signed up.");
-            }
-        }
-        // Repeat similar functions for other buttons...
-    </script>
 </head>
 <body>
-    <div class="title_homepage">
-        <h1>
-            Welcome to Raagame2. I added a password, so ask me for it, even Anay. Please show it to your friends. Enjoy! Thank you very much!
-            If you want to make games with me, just ask. I also added fake Roblox. I am starting to add games one by one over here.
-            I am replacing Raagame1 with Rgame3! Do your work first, because there is a lot of pressure and work.
-        </h1>
-    </div>
-    <div class="select_homepage">
-        <button class="button_playgames" onclick="checkPasswordRaagames()">Play Rgame3</button>
-        <a href="https://gnhustgames.github.io/homepage/" target="_blank">
-            <button class="button_joindiscord">Play Gnhustgames</button>
-        </a>
-        <button class="button_playgames" onclick="checkPasswordEaglercraft()">Play Real-like Minecraft</button>
-        <button class="button_playgames" onclick="checkPasswordSurvival()">Play Survival Race</button>
-    </div>
+    <!-- Your existing content -->
+    <!-- ... [Your existing content remains unchanged] ... -->
 
     <!-- Custom Cursor Element -->
     <div id="custom-cursor"></div>
 
-    <!-- Hand Detection Script -->
+    <!-- Video and Canvas Elements for Hand Tracking -->
+    <video id="input_video" playsinline></video>
+    <canvas id="output_canvas"></canvas>
+
+    <!-- Hand Tracking and Cursor Control Script -->
     <script>
-        const cursor = document.getElementById('custom-cursor');
-        
-        const videoElement = document.createElement('video');
-        const canvasElement = document.createElement('canvas');
+        const videoElement = document.getElementById('input_video');
+        const canvasElement = document.getElementById('output_canvas');
         const canvasCtx = canvasElement.getContext('2d');
-        document.body.appendChild(videoElement);
-        document.body.appendChild(canvasElement);
+        const cursor = document.getElementById('custom-cursor');
+
+        let isClicking = false;
+
+        function distance(point1, point2) {
+            const dx = point1.x - point2.x;
+            const dy = point1.y - point2.y;
+            return Math.sqrt(dx * dx + dy * dy);
+        }
+
+        function onResults(results) {
+            canvasCtx.save();
+            canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+
+            if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
+                const landmarks = results.multiHandLandmarks[0];
+
+                // Get index finger tip and thumb tip landmarks
+                const indexFingerTip = landmarks[8];
+                const thumbTip = landmarks[4];
+
+                // Calculate the normalized distance between index finger tip and thumb tip
+                const pinchDistance = distance(indexFingerTip, thumbTip);
+
+                // Define a threshold for pinch gesture
+                const pinchThreshold = 0.05; // Adjust this value as needed
+
+                // Update cursor position
+                cursor.style.left = `${indexFingerTip.x * window.innerWidth}px`;
+                cursor.style.top = `${indexFingerTip.y * window.innerHeight}px`;
+
+                // Check if pinch gesture is detected
+                if (pinchDistance < pinchThreshold) {
+                    if (!isClicking) {
+                        isClicking = true;
+                        // Simulate mouse down event
+                        simulateMouseEvent('mousedown', indexFingerTip.x, indexFingerTip.y);
+                    }
+                } else {
+                    if (isClicking) {
+                        isClicking = false;
+                        // Simulate mouse up event
+                        simulateMouseEvent('mouseup', indexFingerTip.x, indexFingerTip.y);
+                        // Simulate click event
+                        simulateMouseEvent('click', indexFingerTip.x, indexFingerTip.y);
+                    }
+                }
+            }
+
+            canvasCtx.restore();
+        }
+
+        function simulateMouseEvent(eventType, x, y) {
+            const event = new MouseEvent(eventType, {
+                clientX: x * window.innerWidth,
+                clientY: y * window.innerHeight,
+                bubbles: true,
+                cancelable: true,
+                view: window
+            });
+            const element = document.elementFromPoint(event.clientX, event.clientY);
+            if (element) {
+                element.dispatchEvent(event);
+            }
+        }
 
         const hands = new Hands({
-            locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
+            locateFile: (file) => {
+                return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
+            }
         });
+
         hands.setOptions({
             maxNumHands: 1,
             modelComplexity: 1,
-            minDetectionConfidence: 0.5,
-            minTrackingConfidence: 0.5
+            minDetectionConfidence: 0.7,
+            minTrackingConfidence: 0.7
         });
-        hands.onResults((results) => {
-            canvasCtx.save();
-            canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-            if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
-                const landmarks = results.multiHandLandmarks[0];
-                const indexFingerTip = landmarks[8];
-                cursor.style.left = `${indexFingerTip.x * window.innerWidth}px`;
-                cursor.style.top = `${indexFingerTip.y * window.innerHeight}px`;
-            }
-            canvasCtx.restore();
-        });
+
+        hands.onResults(onResults);
 
         const camera = new Camera(videoElement, {
             onFrame: async () => {
@@ -128,6 +138,7 @@
             width: 640,
             height: 480
         });
+
         camera.start();
     </script>
 </body>
