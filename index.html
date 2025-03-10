@@ -5,11 +5,11 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-BTL6D79ZZ4"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){ dataLayer.push(arguments); }
+    function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', 'G-BTL6D79ZZ4');
   </script>
-  
+
   <!-- Meta Tags & Favicon -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,23 +18,35 @@
   <meta name="robots" content="index, follow">
   <title>Welcome to Raagame2</title>
   <link rel="icon" href="https://raahilaalam.github.io/raagame2/icon.png">
-  
-  <!-- Fonts & External CSS -->
+
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="welcomepage.css">
-  <link rel="stylesheet" type="text/css" href="styles.css">
-  
+
   <!-- Custom Styles -->
   <style>
     body {
       margin: 0;
       overflow: hidden;
-      /* Set your custom cursor here */
       cursor: url('cursor.png'), auto;
+      font-family: 'Poppins', sans-serif;
     }
-    /* You can include additional styles for your title and buttons via your welcomepage.css and styles.css */
-    
-    /* Sign Up and Sign In Overlay Styles */
+    .title_homepage h1 {
+      text-align: center;
+      font-size: 24px;
+      padding: 20px;
+    }
+    .select_homepage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
     #signup-overlay, #signin-overlay {
       display: none;
       position: fixed;
@@ -55,20 +67,18 @@
       max-width: 300px;
       margin: auto;
     }
-    #signup-overlay input, #signin-overlay input {
+    input {
       padding: 8px;
       margin: 10px 0;
       font-size: 1rem;
       width: 90%;
     }
-    #signup-overlay button, #signin-overlay button {
+    button.overlay-button {
       padding: 8px 16px;
       font-size: 1rem;
-      cursor: pointer;
     }
   </style>
-  
-  <!-- Combined JavaScript -->
+
   <script>
     /* --- Automatic Golock Redirect --- */
     function checkGolockAccess() {
@@ -76,93 +86,48 @@
         window.location.href = "https://raahilaalam.github.io/golock";
       }
     }
-    window.onload = function() {
+    window.onload = function () {
       checkGolockAccess();
     };
 
     /* --- Loading Feature --- */
-    // Opens a loading page in a new window then, after a delay, redirects that window to the target URL.
     function openWithLoading(targetUrl) {
-      var loadingWindow = window.open("loading.html", "LoadingWindow", "width=800,height=600");
-      setTimeout(function() {
-        loadingWindow.location.href = targetUrl;
-      }, 3000);
+      var loadingWindow = window.open("loading.html", "_blank", "width=800,height=600");
+      if (loadingWindow) {
+        setTimeout(function () {
+          loadingWindow.location.href = targetUrl;
+        }, 3000);
+      } else {
+        alert("Popup blocked or failed to open.");
+      }
     }
 
-    /* --- Game Access Functions (Using School ID & Password) --- */
-    function checkPasswordRaagames() {
+    /* --- Game Access Functions --- */
+    function checkPassword(game, url, correctPassword) {
       var schoolId = prompt("Please enter your school ID:");
       if (schoolId === "220653") {
         localStorage.setItem('golockAccess', 'true');
         openWithLoading("https://raahilaalam.github.io/golock");
-      } else if (schoolId === "216305" || schoolId === "218359" || schoolId === "228918" || schoolId === "212611") {
+      } else if (["216305", "218359", "228918", "212611"].includes(schoolId)) {
         var password = prompt("Please enter the password:");
-        if (password === "super2") {
-          openWithLoading("https://raahilaalam.github.io/raagames");
+        if (password === correctPassword) {
+          openWithLoading(url);
         } else {
-          alert("Incorrect password. If you do not know it, ask me.");
-        }
-      } else {
-        alert("The ID you entered may be misspelled or you are not signed up.");
-      }
-    }
-    function checkPasswordEaglercraft() {
-      var schoolId = prompt("Please enter your school ID:");
-      if (schoolId === "220653") {
-        localStorage.setItem('golockAccess', 'true');
-        openWithLoading("https://raahilaalam.github.io/golock");
-      } else if (schoolId === "216305" || schoolId === "218359" || schoolId === "228918" || schoolId === "212611") {
-        var password = prompt("Please enter the password:");
-        if (password === "rsuper2") {
-          openWithLoading("https://buttertoasty.github.io/games1/games/Minecraft%201.8/index.html");
-        } else {
-          alert("Incorrect password. If you do not know it, ask me.");
-        }
-      } else {
-        alert("The ID you entered may be misspelled or you are not signed up.");
-      }
-    }
-    function checkPasswordSurvival() {
-      var schoolId = prompt("Please enter your school ID:");
-      if (schoolId === "220653") {
-        localStorage.setItem('golockAccess', 'true');
-        openWithLoading("https://raahilaalam.github.io/golock");
-      } else if (schoolId === "216305" || schoolId === "218359" || schoolId === "228918" || schoolId === "212611") {
-        var password = prompt("Please enter the password:");
-        if (password === "rsuper2") {
-          openWithLoading("https://www.survivalrace.net");
-        } else {
-          alert("Incorrect password. If you do not know it, ask me.");
-        }
-      } else {
-        alert("The ID you entered may be misspelled or you are not signed up.");
-      }
-    }
-    function checkPasswordR3() {
-      var schoolId = prompt("Please enter your school ID:");
-      if (schoolId === "220653") {
-        localStorage.setItem('golockAccess', 'true');
-        openWithLoading("https://raahilaalam.github.io/golock");
-      } else if (schoolId === "216305" || schoolId === "218359" || schoolId === "228918" || schoolId === "212611") {
-        var password = prompt("Please enter the password:");
-        if (password === "rsuper2") {
-          openWithLoading("https://raahilaalam.github.io/rgame3/");
-        } else {
-          alert("Incorrect password. If you do not know it, ask me.");
+          alert(`Incorrect password for ${game}. If you do not know it, ask me.`);
         }
       } else {
         alert("The ID you entered may be misspelled or you are not signed up.");
       }
     }
 
-    /* --- Sign Up Feature (New Account Creation) --- */
+    /* --- Sign Up & Sign In Features --- */
     function showSignUpForm() {
       document.getElementById('signup-overlay').style.display = "flex";
     }
     function createAccount() {
       var username = document.getElementById('signup-username').value.trim();
       var password = document.getElementById('signup-password').value;
-      if (username === "" || password === "") {
+      if (!username || !password) {
         alert("Please fill in all fields.");
         return;
       }
@@ -171,20 +136,19 @@
         alert("An account with that username already exists. Please choose a different username.");
         return;
       }
-      accounts[username] = { password: password };
+      accounts[username] = { password };
       localStorage.setItem("accounts", JSON.stringify(accounts));
       alert("Account created successfully!");
       document.getElementById('signup-overlay').style.display = "none";
     }
 
-    /* --- Sign In Feature (Using Existing Credentials) --- */
     function showSignInForm() {
       document.getElementById('signin-overlay').style.display = "flex";
     }
     function signIn() {
       var username = document.getElementById('signin-username').value.trim();
       var password = document.getElementById('signin-password').value;
-      if (username === "" || password === "") {
+      if (!username || !password) {
         alert("Please fill in all fields.");
         return;
       }
@@ -193,8 +157,6 @@
         alert("Sign In successful!");
         localStorage.setItem("signedIn", "true");
         document.getElementById('signin-overlay').style.display = "none";
-        // Here you could optionally redirect the user to a particular page
-        // window.location.href = "yourGamePage.html";
       } else {
         alert("Incorrect username or password.");
       }
@@ -202,52 +164,38 @@
   </script>
 </head>
 <body>
-  <!-- Main Title and Game Buttons -->
+  <!-- Main Title -->
   <div class="title_homepage">
-    <h1>
-      Welcome to Raagame2. I added a password feature so ask me for it—even Anay.
-      Please show it to your friends. Enjoy! If you want to work on games with me, just ask.
-      I also added Pop It Master,no account needed!. I'm gradually replacing Raagame1 with Rgame3.
-      Do your work first—there is a lot of pressure and work!
-    </h1>
+    <h1>Welcome to Raagame2. Enjoy exploring the features!</h1>
   </div>
+
+  <!-- Buttons -->
   <div class="select_homepage">
-    <button class="button_playgames" onclick="checkPasswordRaagames()">Play Rgame3</button>
-    <a href="https://gnhustgames.github.io/homepage/" target="_blank">
-      <button class="button_joindiscord">Play Gnhustgames</button>
-    </a>
-    <a href="https://raahilaalam.github.io/raagame2/popit/index.html" target="_blank">
-      <button class="button_joindiscord">Play Pop It Master</button>
-      </a>
-      
-    <button class="button_playgames" onclick="checkPasswordEaglercraft()">Play Real-like Minecraft</button>
-    <button class="button_playgames" onclick="checkPasswordSurvival()">Play Survival Race</button>
-    <!-- Account Management Buttons -->
-    <button class="button_playgames" onclick="showSignUpForm()">Sign Up</button>
-    <button class="button_playgames" onclick="showSignInForm()">Sign In</button>
+    <button onclick="checkPassword('Raagame3', 'https://raahilaalam.github.io/rgame3/', 'rsuper2')">Play Rgame3</button>
+    <button onclick="openWithLoading('https://raahilaalam.github.io/raagame2/popit/index.html')">Play Pop It Master</button>
+    <button onclick="checkPassword('Minecraft', 'https://buttertoasty.github.io/games1/games/Minecraft%201.8/index.html', 'rsuper2')">Play Minecraft</button>
+    <button onclick="checkPassword('Survival Race', 'https://www.survivalrace.net', 'rsuper2')">Play Survival Race</button>
+    <button onclick="showSignUpForm()">Sign Up</button>
+    <button onclick="showSignInForm()">Sign In</button>
   </div>
-  
+
   <!-- Sign Up Overlay -->
   <div id="signup-overlay">
     <div>
       <h2>Create a New Account</h2>
-      <input type="text" id="signup-username" placeholder="Choose Username">
-      <br>
-      <input type="password" id="signup-password" placeholder="Choose Password">
-      <br>
-      <button onclick="createAccount()">Create Account</button>
+      <input id="signup-username" type="text" placeholder="Choose Username">
+      <input id="signup-password" type="password" placeholder="Choose Password">
+      <button class="overlay-button" onclick="createAccount()">Create Account</button>
     </div>
   </div>
-  
+
   <!-- Sign In Overlay -->
   <div id="signin-overlay">
     <div>
       <h2>Sign In</h2>
-      <input type="text" id="signin-username" placeholder="Username">
-      <br>
-      <input type="password" id="signin-password" placeholder="Password">
-      <br>
-      <button onclick="signIn()">Sign In</button>
+      <input id="signin-username" type="text" placeholder="Username">
+      <input id="signin-password" type="password" placeholder="Password">
+      <button class="overlay-button" onclick="signIn()">Sign In</button>
     </div>
   </div>
 </body>
