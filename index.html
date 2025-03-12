@@ -130,7 +130,10 @@
         var password = prompt("Please enter the password:");
         if (password === correctPassword) {
           openWithLoading(url);
-        } else {
+      let accounts = JSON.parse(localStorage.getItem('accounts') || "{}");
+      if (accounts[username]) {
+          openWithLoading(url);
+           } else {
           alert(`Incorrect password for ${game}. If you do not know it, ask me.`);
         }
       } else {
