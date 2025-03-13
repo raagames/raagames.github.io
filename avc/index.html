@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avatar Creator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Create Your Avatar</h1>
+  <div class="avatar-preview">
+    <div id="avatar">
+      <div class="hair short"></div>
+      <div class="eyes"></div>
+      <div class="outfit casual"></div>
+    </div>
+  </div>
+  
+  <div class="controls">
+    <label>Hair Style:
+      <select id="hair-style">
+        <option value="short">Short</option>
+        <option value="long">Long</option>
+        <option value="bald">Bald</option>
+      </select>
+    </label>
+
+    <label>Outfit:
+      <select id="outfit">
+        <option value="casual">Casual</option>
+        <option value="formal">Formal</option>
+        <option value="sporty">Sporty</option>
+      </select>
+    </label>
+
+    <label>Eye Color:
+      <select id="eye-color">
+        <option value="blue">Blue</option>
+        <option value="green">Green</option>
+        <option value="brown">Brown</option>
+      </select>
+    </label>
+    <button id="save-avatar">Save Avatar</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
