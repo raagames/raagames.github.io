@@ -56,14 +56,14 @@
       margin-top: 20px;
     }
 
-    /* Tech-Inspired Button Animation */
+    /* Button Animation */
     button {
       padding: 15px 30px;
       font-size: 16px;
       font-family: 'Poppins', sans-serif;
-      color: #00C6FF; /* Bright blue button text */
+      color: #00C6FF;
       background: transparent;
-      border: 2px solid #00C6FF; /* Matching blue border */
+      border: 2px solid #00C6FF;
       border-radius: 5px;
       cursor: pointer;
       text-transform: uppercase;
@@ -74,27 +74,9 @@
     }
 
     button:hover {
-      color: #005FFF; /* Deep blue on hover */
+      color: #005FFF;
       box-shadow: 0 0 15px #00C6FF, 0 0 30px #00C6FF;
-      transform: scale(1.1); /* Slight zoom effect */
-    }
-
-    button:before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: #00C6FF;
-      transition: all 0.6s ease;
-      opacity: 0;
-      transform: rotate(45deg);
-    }
-
-    button:hover:before {
-      opacity: 0.1;
-      transform: rotate(0deg);
+      transform: scale(1.1);
     }
 
     /* Overlay Styles */
@@ -111,7 +93,7 @@
       align-items: center;
     }
 
-    #signin-overlay div, #signup-overlay div {
+    #signup-overlay div, #signin-overlay div {
       background: #fff;
       padding: 20px;
       border-radius: 10px;
@@ -132,7 +114,7 @@
     button.overlay-button {
       padding: 8px 16px;
       font-size: 1rem;
-      background-color: #0074D9; /* Bold blue for overlay buttons */
+      background-color: #0074D9;
       color: white;
       border: none;
       border-radius: 5px;
@@ -181,13 +163,28 @@
 
     // Show Sign-Up Form
     function showSignUpForm() {
-      document.getElementById('signup-overlay').style.display = "flex";
+      const signUpOverlay = document.getElementById('signup-overlay');
+      if (signUpOverlay) {
+        signUpOverlay.style.display = "flex";
+      } else {
+        console.error("Sign-Up Overlay not found.");
+      }
+    }
+
+    // Show Sign-In Form
+    function showSignInForm() {
+      const signInOverlay = document.getElementById('signin-overlay');
+      if (signInOverlay) {
+        signInOverlay.style.display = "flex";
+      } else {
+        console.error("Sign-In Overlay not found.");
+      }
     }
 
     // Create New Account
     function createAccount() {
-      var username = document.getElementById('signup-username').value.trim();
-      var password = document.getElementById('signup-password').value;
+      const username = document.getElementById('signup-username').value.trim();
+      const password = document.getElementById('signup-password').value;
 
       if (!username || !password) {
         alert("Please fill in all fields.");
@@ -207,22 +204,17 @@
       document.getElementById('signup-overlay').style.display = "none";
     }
 
-    // Show Sign-In Form
-    function showSignInForm() {
-      document.getElementById('signin-overlay').style.display = "flex";
-    }
-
     // Handle Sign-In
     function signIn() {
-      var username = document.getElementById('signin-username').value.trim();
-      var password = document.getElementById('signin-password').value;
+      const username = document.getElementById('signin-username').value.trim();
+      const password = document.getElementById('signin-password').value;
 
       if (!username || !password) {
         alert("Please fill in all fields.");
         return;
       }
 
-      let accounts = JSON.parse(localStorage.getItem('accounts') || "{}");
+      const accounts = JSON.parse(localStorage.getItem('accounts') || "{}");
 
       if (accounts[username] && accounts[username].password === password) {
         alert("Sign In successful!");
@@ -248,4 +240,17 @@
     <button onclick="checkAccess('Minecraft', 'https://raagames.github.io/games/minecraft.html')">Play Minecraft</button>
     <button onclick="checkAccess('Survival Race', 'https://www.survivalrace.net')">Play Survival Race</button>
     <button onclick="showSignUpForm()">Sign Up</button>
-    <button onclick="showSignInForm()">Sign In</button
+    <button onclick="showSignInForm()">Sign In</button>
+  </div>
+
+  <!-- Sign-Up Overlay -->
+  <div id="signup-overlay">
+    <div>
+      <h2 style="color: black;">Create a New Account</h2>
+      <input id="signup-username" type="text" placeholder="Choose Username">
+      <input id="signup-password" type="password" placeholder="Choose Password">
+      <button class="overlay-button" onclick="createAccount()">Create Account</button>
+    </div>
+  </div>
+
+  <!-- Sign-In Overlay -->
