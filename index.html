@@ -45,7 +45,7 @@
       text-align: center;
       font-size: 24px;
       padding: 20px;
-      color: white; /* White text for better visibility */
+      color: white; /* Ensures visibility of the title text */
     }
 
     .select_homepage {
@@ -111,7 +111,7 @@
       align-items: center;
     }
 
-    #signup-overlay div, #signin-overlay div {
+    #signin-overlay div, #signup-overlay div {
       background: #fff;
       padding: 20px;
       border-radius: 10px;
@@ -124,6 +124,9 @@
       margin: 10px 0;
       font-size: 1rem;
       width: 90%;
+      color: black; /* Ensures text inside the input is black */
+      background-color: white; /* White background for readability */
+      border: 1px solid #ccc; /* Light border */
     }
 
     button.overlay-button {
@@ -235,7 +238,7 @@
 <body>
   <!-- Main Title -->
   <div class="title_homepage">
-    <h1>Welcome to Raagame2! You can sign yourselves ID up.</h1>
+    <h1>Welcome to Raagame2! Sign your ID up. Ask me. Password is rsuper2. Some games marked * are free.</h1>
   </div>
 
   <!-- Game Options -->
@@ -245,11 +248,4 @@
     <button onclick="checkAccess('Minecraft', 'https://raagames.github.io/games/minecraft.html')">Play Minecraft</button>
     <button onclick="checkAccess('Survival Race', 'https://www.survivalrace.net')">Play Survival Race</button>
     <button onclick="showSignUpForm()">Sign Up</button>
-    <button onclick="showSignInForm()">Sign In</button>
-  </div>
-
-  <!-- Sign-Up Overlay -->
-  <div id="signup-overlay">
-    <div>
-      <h2>Create a New Account</h2>
-      <input id="signup-username
+    <button onclick="showSignInForm()">Sign In</button
