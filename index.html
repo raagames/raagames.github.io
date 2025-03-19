@@ -45,7 +45,7 @@
       text-align: center;
       font-size: 24px;
       padding: 20px;
-      color: #ffffff; /* Ensure text is visible */
+      color: #00C6FF; /* Vibrant blue for title text */
     }
 
     .select_homepage {
@@ -61,9 +61,9 @@
       padding: 15px 30px;
       font-size: 16px;
       font-family: 'Poppins', sans-serif;
-      color: #ffffff; /* Bright text for readability */
+      color: #00C6FF; /* Bright blue button text */
       background: transparent;
-      border: 2px solid #00f2ff; /* Neon border */
+      border: 2px solid #00C6FF; /* Matching blue border */
       border-radius: 5px;
       cursor: pointer;
       text-transform: uppercase;
@@ -74,8 +74,8 @@
     }
 
     button:hover {
-      color: #0affcc; /* Glow effect changes on hover */
-      box-shadow: 0 0 15px #00f2ff, 0 0 30px #00f2ff;
+      color: #005FFF; /* Deep blue on hover */
+      box-shadow: 0 0 15px #00C6FF, 0 0 30px #00C6FF;
       transform: scale(1.1); /* Slight zoom effect */
     }
 
@@ -86,7 +86,7 @@
       left: -50%;
       width: 200%;
       height: 200%;
-      background: #00f2ff;
+      background: #00C6FF;
       transition: all 0.6s ease;
       opacity: 0;
       transform: rotate(45deg);
@@ -129,14 +129,14 @@
     button.overlay-button {
       padding: 8px 16px;
       font-size: 1rem;
-      background-color: #FF851B;
+      background-color: #0074D9; /* Bold blue for overlay buttons */
       color: white;
       border: none;
       border-radius: 5px;
     }
 
     button.overlay-button:hover {
-      background-color: #FF6309;
+      background-color: #005BB5;
     }
   </style>
 
@@ -235,7 +235,7 @@
 <body>
   <!-- Main Title -->
   <div class="title_homepage">
-    <h1>Welcome to Raagame2! I have to sign your ID up. Ask me. Password is rsuper2. Some games marked * are free.</h1>
+    <h1>Welcome to Raagame2! Sign your ID up. Ask me. Password is rsuper2. Some games marked * are free.</h1>
   </div>
 
   <!-- Game Options -->
@@ -252,6 +252,4 @@
   <div id="signup-overlay">
     <div>
       <h2>Create a New Account</h2>
-      <input id="signup-username" type="text" placeholder="Choose Username">
-      <input id="signup-password" type="password" placeholder="Choose Password">
-      <button class="overlay-button" onclick="createAccount()">Create Account</button>
+      <input id="
