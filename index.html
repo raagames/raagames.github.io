@@ -51,22 +51,49 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
+      gap: 20px;
       margin-top: 20px;
     }
 
+    /* Tech-Inspired Button Animation */
     button {
-      padding: 10px 20px;
+      padding: 15px 30px;
       font-size: 16px;
-      cursor: pointer;
-      background-color: #0074D9;
-      border: none;
+      font-family: 'Poppins', sans-serif;
+      color: #00f2ff; /* Futuristic text color */
+      background: transparent;
+      border: 2px solid #00f2ff; /* Neon border */
       border-radius: 5px;
-      color: white;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      position: relative;
+      overflow: hidden;
+      transition: color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
     }
 
     button:hover {
-      background-color: #005BB5;
+      color: #0affcc; /* Glow effect changes on hover */
+      box-shadow: 0 0 15px #00f2ff, 0 0 30px #00f2ff;
+      transform: scale(1.1); /* Slight zoom effect */
+    }
+
+    button:before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: #00f2ff;
+      transition: all 0.6s ease;
+      opacity: 0;
+      transform: rotate(45deg);
+    }
+
+    button:hover:before {
+      opacity: 0.1;
+      transform: rotate(0deg);
     }
 
     /* Overlay Styles */
@@ -207,7 +234,7 @@
 <body>
   <!-- Main Title -->
   <div class="title_homepage">
-    <h1>Welcome to Raagame2! Now you can sign yourself up!</h1>
+    <h1>Welcome to Raagame2! Now you can sign yourself up.</h1>
   </div>
 
   <!-- Game Options -->
@@ -230,14 +257,4 @@
     </div>
   </div>
 
-  <!-- Sign-In Overlay -->
-  <div id="signin-overlay">
-    <div>
-      <h2>Sign In</h2>
-      <input id="signin-username" type="text" placeholder="Username">
-      <input id="signin-password" type="password" placeholder="Password">
-      <button class="overlay-button" onclick="signIn()">Sign In</button>
-    </div>
-  </div>
-</body>
-</html>
+  <!-- Sign-In Overlay
