@@ -24,33 +24,29 @@
 
   <!-- Custom Styles -->
   <style>
-    /* Background Animation */
+    /* Dynamic Background */
     body {
       margin: 0;
       overflow: hidden;
-      cursor: url('cursor.png'), auto;
       font-family: 'Poppins', sans-serif;
       background: radial-gradient(circle at center, #00C6FF, #005FFF);
       background-size: 400% 400%;
       animation: swirl 10s linear infinite;
+      color: white;
     }
 
     @keyframes swirl {
-      0% {
-        background-position: 0 0;
-      }
-      100% {
-        background-position: 300% 300%;
-      }
+      0% { background-position: 0 0; }
+      100% { background-position: 300% 300%; }
     }
 
-    /* Home Page Styles */
+    /* Game Hub Styles */
     .title_homepage h1 {
       text-align: center;
       font-size: 24px;
       padding: 20px;
-      color: white;
     }
+
     .select_homepage {
       display: flex;
       flex-direction: column;
@@ -58,10 +54,19 @@
       gap: 10px;
       margin-top: 20px;
     }
+
     button {
       padding: 10px 20px;
       font-size: 16px;
       cursor: pointer;
+      background-color: #0074D9;
+      border: none;
+      border-radius: 5px;
+      color: white;
+    }
+
+    button:hover {
+      background-color: #005BB5;
     }
 
     /* Overlay Styles */
@@ -77,38 +82,50 @@
       justify-content: center;
       align-items: center;
     }
+
     #signup-overlay div, #signin-overlay div {
       background: #fff;
       padding: 20px;
       border-radius: 10px;
       text-align: center;
       max-width: 300px;
-      margin: auto;
     }
+
     input {
       padding: 8px;
       margin: 10px 0;
       font-size: 1rem;
       width: 90%;
     }
+
     button.overlay-button {
       padding: 8px 16px;
       font-size: 1rem;
+      background-color: #FF851B;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+
+    button.overlay-button:hover {
+      background-color: #FF6309;
     }
   </style>
 
   <script>
-    /* --- Automatic Golock Redirect --- */
+    // Check if Golock Access is Granted
     function checkGolockAccess() {
       if (localStorage.getItem('golockAccess') === 'true') {
         window.location.href = "https://raahilaalam.github.io/golock";
       }
     }
+
+    // Run on Page Load
     window.onload = function () {
       checkGolockAccess();
     };
 
-    /* --- Loading Feature --- */
+    // Open Loading Animation then Redirect
     function openWithLoading(targetUrl) {
       var loadingWindow = window.open("loading.html", "_blank", "width=800,height=600");
       if (loadingWindow) {
@@ -120,60 +137,66 @@
       }
     }
 
-    /* --- Game Access Functions --- */
-    function checkPassword(game, url, correctPassword) {
-      var schoolId = prompt("Please enter your school ID:");
-      if (schoolId === "220653") {
-        localStorage.setItem('golockAccess', 'true');
-        openWithLoading("https://raahilaalam.github.io/golock");
-      } else if (["216305", "218359", "228918", "212611"].includes(schoolId)) {
-        var password = prompt("Please enter the password:");
-        if (password === correctPassword) {
-          openWithLoading(url);
-        } else {
-          alert(`Incorrect password for ${game}. If you do not know it, ask me.`);
-        }
+    // Check Sign-In Status Before Accessing Games
+    function checkAccess(game, url) {
+      const signedIn = localStorage.getItem("signedIn");
+      if (signedIn === "true") {
+        openWithLoading(url);
       } else {
-        alert("The ID you entered may be misspelled or you are not signed up.");
+        alert(`Please sign in to access ${game}.`);
+        showSignInForm();
       }
     }
 
-    /* --- Sign Up & Sign In Features --- */
+    // Show Sign-Up Form
     function showSignUpForm() {
       document.getElementById('signup-overlay').style.display = "flex";
     }
+
+    // Create New Account
     function createAccount() {
       var username = document.getElementById('signup-username').value.trim();
       var password = document.getElementById('signup-password').value;
+
       if (!username || !password) {
         alert("Please fill in all fields.");
         return;
       }
+
       let accounts = JSON.parse(localStorage.getItem('accounts') || "{}");
+
       if (accounts[username]) {
         alert("An account with that username already exists. Please choose a different username.");
         return;
       }
+
       accounts[username] = { password };
       localStorage.setItem("accounts", JSON.stringify(accounts));
       alert("Account created successfully!");
       document.getElementById('signup-overlay').style.display = "none";
     }
 
+    // Show Sign-In Form
     function showSignInForm() {
       document.getElementById('signin-overlay').style.display = "flex";
     }
+
+    // Handle Sign-In
     function signIn() {
       var username = document.getElementById('signin-username').value.trim();
       var password = document.getElementById('signin-password').value;
+
       if (!username || !password) {
         alert("Please fill in all fields.");
         return;
       }
+
       let accounts = JSON.parse(localStorage.getItem('accounts') || "{}");
+
       if (accounts[username] && accounts[username].password === password) {
         alert("Sign In successful!");
         localStorage.setItem("signedIn", "true");
+        localStorage.setItem("currentUser", username);
         document.getElementById('signin-overlay').style.display = "none";
       } else {
         alert("Incorrect username or password.");
@@ -184,20 +207,20 @@
 <body>
   <!-- Main Title -->
   <div class="title_homepage">
-    <h1>Welcome to Raagame2.I have to sign your id up,ask me, password is rsuper2.Some game with * means it is free.</h1>
+    <h1>Welcome to Raagame2! I have to sign your ID up. Ask me. Password is rsuper2. Some games marked * are free.</h1>
   </div>
 
-  <!-- Buttons -->
+  <!-- Game Options -->
   <div class="select_homepage">
-    <button onclick="checkPassword('Raagame3', 'https://www.kogama.com/', 'rsuper2')">Play Roblox-like game</button>
-    <button onclick="openWithLoading('https://raagames.github.io/popit/index.html')">*Play Pop It Master*</button>
-    <button onclick="checkPassword('Minecraft', 'https://raagames.github.io/games/minecraft.html', 'rsuper2')">Play Minecraft</button>
-    <button onclick="checkPassword('Survival Race', 'https://www.survivalrace.net', 'rsuper2')">Play Survival Race</button>
+    <button onclick="checkAccess('Raagame3', 'https://www.kogama.com/')">Play Roblox-like game</button>
+    <button onclick="checkAccess('Pop It Master', 'https://raagames.github.io/popit/index.html')">*Play Pop It Master*</button>
+    <button onclick="checkAccess('Minecraft', 'https://raagames.github.io/games/minecraft.html')">Play Minecraft</button>
+    <button onclick="checkAccess('Survival Race', 'https://www.survivalrace.net')">Play Survival Race</button>
     <button onclick="showSignUpForm()">Sign Up</button>
     <button onclick="showSignInForm()">Sign In</button>
   </div>
 
-  <!-- Sign Up Overlay -->
+  <!-- Sign-Up Overlay -->
   <div id="signup-overlay">
     <div>
       <h2>Create a New Account</h2>
@@ -207,7 +230,7 @@
     </div>
   </div>
 
-  <!-- Sign In Overlay -->
+  <!-- Sign-In Overlay -->
   <div id="signin-overlay">
     <div>
       <h2>Sign In</h2>
