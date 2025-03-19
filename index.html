@@ -45,7 +45,7 @@
       text-align: center;
       font-size: 24px;
       padding: 20px;
-      color: white; /* Ensures visibility of the title text */
+      color: #ffffff; /* Ensure text is visible */
     }
 
     .select_homepage {
@@ -56,14 +56,14 @@
       margin-top: 20px;
     }
 
-    /* Button Animation */
+    /* Tech-Inspired Button Animation */
     button {
       padding: 15px 30px;
       font-size: 16px;
       font-family: 'Poppins', sans-serif;
-      color: #00C6FF;
+      color: #ffffff; /* Bright text for readability */
       background: transparent;
-      border: 2px solid #00C6FF;
+      border: 2px solid #00f2ff; /* Neon border */
       border-radius: 5px;
       cursor: pointer;
       text-transform: uppercase;
@@ -74,9 +74,27 @@
     }
 
     button:hover {
-      color: #005FFF;
-      box-shadow: 0 0 15px #00C6FF, 0 0 30px #00C6FF;
-      transform: scale(1.1);
+      color: #0affcc; /* Glow effect changes on hover */
+      box-shadow: 0 0 15px #00f2ff, 0 0 30px #00f2ff;
+      transform: scale(1.1); /* Slight zoom effect */
+    }
+
+    button:before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: #00f2ff;
+      transition: all 0.6s ease;
+      opacity: 0;
+      transform: rotate(45deg);
+    }
+
+    button:hover:before {
+      opacity: 0.1;
+      transform: rotate(0deg);
     }
 
     /* Overlay Styles */
@@ -106,22 +124,19 @@
       margin: 10px 0;
       font-size: 1rem;
       width: 90%;
-      color: black; /* Ensures text inside the input is black */
-      background-color: white; /* White background for readability */
-      border: 1px solid #ccc; /* Light border */
     }
 
     button.overlay-button {
       padding: 8px 16px;
       font-size: 1rem;
-      background-color: #0074D9;
+      background-color: #FF851B;
       color: white;
       border: none;
       border-radius: 5px;
     }
 
     button.overlay-button:hover {
-      background-color: #005BB5;
+      background-color: #FF6309;
     }
   </style>
 
@@ -163,28 +178,13 @@
 
     // Show Sign-Up Form
     function showSignUpForm() {
-      const signUpOverlay = document.getElementById('signup-overlay');
-      if (signUpOverlay) {
-        signUpOverlay.style.display = "flex";
-      } else {
-        console.error("Sign-Up Overlay not found.");
-      }
-    }
-
-    // Show Sign-In Form
-    function showSignInForm() {
-      const signInOverlay = document.getElementById('signin-overlay');
-      if (signInOverlay) {
-        signInOverlay.style.display = "flex";
-      } else {
-        console.error("Sign-In Overlay not found.");
-      }
+      document.getElementById('signup-overlay').style.display = "flex";
     }
 
     // Create New Account
     function createAccount() {
-      const username = document.getElementById('signup-username').value.trim();
-      const password = document.getElementById('signup-password').value;
+      var username = document.getElementById('signup-username').value.trim();
+      var password = document.getElementById('signup-password').value;
 
       if (!username || !password) {
         alert("Please fill in all fields.");
@@ -204,17 +204,22 @@
       document.getElementById('signup-overlay').style.display = "none";
     }
 
+    // Show Sign-In Form
+    function showSignInForm() {
+      document.getElementById('signin-overlay').style.display = "flex";
+    }
+
     // Handle Sign-In
     function signIn() {
-      const username = document.getElementById('signin-username').value.trim();
-      const password = document.getElementById('signin-password').value;
+      var username = document.getElementById('signin-username').value.trim();
+      var password = document.getElementById('signin-password').value;
 
       if (!username || !password) {
         alert("Please fill in all fields.");
         return;
       }
 
-      const accounts = JSON.parse(localStorage.getItem('accounts') || "{}");
+      let accounts = JSON.parse(localStorage.getItem('accounts') || "{}");
 
       if (accounts[username] && accounts[username].password === password) {
         alert("Sign In successful!");
@@ -230,7 +235,7 @@
 <body>
   <!-- Main Title -->
   <div class="title_homepage">
-    <h1>Welcome to Raagame2! Sign your ID up. Ask me. Password is rsuper2. Some games marked * are free.</h1>
+    <h1>Welcome to Raagame2! I have to sign your ID up. Ask me. Password is rsuper2. Some games marked * are free.</h1>
   </div>
 
   <!-- Game Options -->
@@ -246,6 +251,7 @@
   <!-- Sign-Up Overlay -->
   <div id="signup-overlay">
     <div>
-      <h2 style="color: black;">Create a New Account</h2>
+      <h2>Create a New Account</h2>
       <input id="signup-username" type="text" placeholder="Choose Username">
-      <input id="signup-password" type="
+      <input id="signup-password" type="password" placeholder="Choose Password">
+      <button class="overlay-button" onclick="createAccount()">Create Account</button>
