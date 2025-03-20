@@ -125,13 +125,36 @@
       checkGolockAccess();
     };
 
-    // Open Loading Animation then Redirect
-    function openWithLoading(targetUrl) {
-      var loadingWindow = window.open("loading.html", "_blank", "width=800,height=600");
-      if (loadingWindow) {
-        setTimeout(function () {
-          loadingWindow.location.href = targetUrl;
-        }, 3000);
+    // Open Blank Window with Embedded Game
+    function openWithGameEmbed(gameUrl) {
+      var gameWindow = window.open("about:blank", "_blank", "width=800,height=600");
+      if (gameWindow) {
+        gameWindow.document.write(`
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <title>Game Loading...</title>
+            <style>
+              body {
+                margin: 0;
+                background: black;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+              }
+              iframe {
+                width: 100%;
+                height: 100%;
+                border: none;
+              }
+            </style>
+          </head>
+          <body>
+            <iframe src="${gameUrl}" allowfullscreen></iframe>
+          </body>
+          </html>
+        `);
       } else {
         alert("Popup blocked or failed to open.");
       }
@@ -141,7 +164,7 @@
     function checkAccess(game, url) {
       const signedIn = localStorage.getItem("signedIn");
       if (signedIn === "true") {
-        openWithLoading(url);
+        openWithGameEmbed(url);
       } else {
         alert(`Please sign in to access ${game}.`);
         showSignInForm();
