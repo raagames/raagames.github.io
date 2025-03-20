@@ -24,7 +24,6 @@
 
   <!-- Custom Styles -->
   <style>
-    /* Dynamic Background */
     body {
       margin: 0;
       overflow: hidden;
@@ -40,7 +39,6 @@
       100% { background-position: 300% 300%; }
     }
 
-    /* Game Hub Styles */
     .title_homepage h1 {
       text-align: center;
       font-size: 24px;
@@ -69,7 +67,6 @@
       background-color: #005BB5;
     }
 
-    /* Overlay Styles */
     #signup-overlay, #signin-overlay {
       display: none;
       position: fixed;
@@ -113,19 +110,16 @@
   </style>
 
   <script>
-    // Check if Golock Access is Granted
     function checkGolockAccess() {
       if (localStorage.getItem('golockAccess') === 'true') {
         window.location.href = "https://raahilaalam.github.io/golock";
       }
     }
 
-    // Run on Page Load
     window.onload = function () {
       checkGolockAccess();
     };
 
-    // Open Blank Window with Embedded Game
     function openWithGameEmbed(gameUrl) {
       var gameWindow = window.open("about:blank", "_blank", "width=800,height=600");
       if (gameWindow) {
@@ -160,23 +154,24 @@
       }
     }
 
-    // Check Sign-In Status Before Accessing Games
     function checkAccess(game, url) {
       const signedIn = localStorage.getItem("signedIn");
       if (signedIn === "true") {
-        openWithGameEmbed(url);
+        if (game === 'Minecraft') {
+          window.open(url, "_blank", "width=800,height=600");
+        } else {
+          openWithGameEmbed(url);
+        }
       } else {
         alert(`Please sign in to access ${game}.`);
         showSignInForm();
       }
     }
 
-    // Show Sign-Up Form
     function showSignUpForm() {
       document.getElementById('signup-overlay').style.display = "flex";
     }
 
-    // Create New Account
     function createAccount() {
       var username = document.getElementById('signup-username').value.trim();
       var password = document.getElementById('signup-password').value;
@@ -199,12 +194,10 @@
       document.getElementById('signup-overlay').style.display = "none";
     }
 
-    // Show Sign-In Form
     function showSignInForm() {
       document.getElementById('signin-overlay').style.display = "flex";
     }
 
-    // Handle Sign-In
     function signIn() {
       var username = document.getElementById('signin-username').value.trim();
       var password = document.getElementById('signin-password').value;
@@ -228,12 +221,10 @@
   </script>
 </head>
 <body>
-  <!-- Main Title -->
   <div class="title_homepage">
     <h1>Welcome to Raagame2! Now you can sign yourself up.</h1>
   </div>
 
-  <!-- Game Options -->
   <div class="select_homepage">
     <button onclick="checkAccess('Raagame3', 'https://www.kogama.com/')">Play Roblox-like game</button>
     <button onclick="checkAccess('Pop It Master', 'https://raagames.github.io/popit/index.html')">*Play Pop It Master*</button>
@@ -243,7 +234,6 @@
     <button onclick="showSignInForm()">Sign In</button>
   </div>
 
-  <!-- Sign-Up Overlay -->
   <div id="signup-overlay">
     <div>
       <h2>Create a New Account</h2>
@@ -253,7 +243,6 @@
     </div>
   </div>
 
-  <!-- Sign-In Overlay -->
   <div id="signin-overlay">
     <div>
       <h2>Sign In</h2>
