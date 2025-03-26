@@ -24,6 +24,7 @@
 
   <!-- Custom Styles -->
   <style>
+    /* Dynamic Background */
     body {
       margin: 0;
       overflow: hidden;
@@ -39,34 +40,58 @@
       100% { background-position: 300% 300%; }
     }
 
-    .title_homepage h1 {
-      text-align: center;
-      font-size: 24px;
-      padding: 20px;
+    /* Universal Button Container */
+    .button-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      margin-top: 50px;
+      flex-wrap: wrap;
     }
 
-    .select_homepage {
+    /* Button Styles */
+    .game-button {
+      width: 200px;
+      height: 150px;
+      border: none;
+      border-radius: 15px;
+      font-family: Arial, sans-serif;
+      color: white;
+      font-size: 16px;
+      text-align: center;
+      cursor: pointer;
       display: flex;
       flex-direction: column;
+      justify-content: center;
       align-items: center;
-      gap: 10px;
-      margin-top: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
     }
 
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      background-color: #0074D9;
-      border: none;
-      border-radius: 5px;
-      color: white;
+    .game-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
     }
 
-    button:hover {
-      background-color: #005BB5;
+    /* Individual Button Themes */
+    .raagame3 {
+      background: linear-gradient(to bottom right, #FF4136, #85144b);
     }
 
+    .popit-master {
+      background: linear-gradient(to bottom right, #0074D9, #001f3f);
+    }
+
+    .minecraft {
+      background: linear-gradient(to bottom right, #2ECC40, #3D9970);
+    }
+
+    .survival-race {
+      background: linear-gradient(to bottom right, #FF851B, #FF4136);
+    }
+
+    /* Overlay Styles */
     #signup-overlay, #signin-overlay {
       display: none;
       position: fixed;
@@ -222,34 +247,29 @@
 </head>
 <body>
   <div class="title_homepage">
-    <h1>Welcome to Raagame2! Now you can sign yourself up.</h1>
+    <h1>Welcome to Raagame2! Customize your journey.</h1>
   </div>
 
-  <div class="select_homepage">
-    <button onclick="checkAccess('Raagame3', 'https://www.kogama.com/')">Play Roblox-like game</button>
-    <button onclick="checkAccess('Pop It Master', 'https://raagames.github.io/popit/index.html')">*Play Pop It Master*</button>
-    <button onclick="checkAccess('Minecraft', 'https://raagames.github.io/games/minecraft.html')">Play Minecraft</button>
-    <button onclick="checkAccess('Survival Race', 'https://www.survivalrace.net')">Play Survival Race</button>
-    <button onclick="showSignUpForm()">Sign Up</button>
-    <button onclick="showSignInForm()">Sign In</button>
+  <div class="button-container">
+    <button class="game-button raagame3" onclick="checkAccess('Raagame3', 'https://www.kogama.com/')">
+      <span class="icon">🎮</span>
+      Roblox-like game
+    </button>
+    <button class="game-button popit-master" onclick="checkAccess('Pop It Master', 'https://raagames.github.io/popit/index.html')">
+      <span class="icon">🕹️</span>
+      Pop It Master
+    </button>
+    <button class="game-button minecraft" onclick="checkAccess('Minecraft', 'https://raagames.github.io/games/minecraft.html')">
+      <span class="icon">👾</span>
+      Minecraft
+    </button>
+    <button class="game-button survival-race" onclick="checkAccess('Survival Race', 'https://www.survivalrace.net')">
+      <span class="icon">🏁</span>
+      Survival Race
+    </button>
   </div>
 
   <div id="signup-overlay">
     <div>
       <h2>Create a New Account</h2>
-      <input id="signup-username" type="text" placeholder="Choose Username">
-      <input id="signup-password" type="password" placeholder="Choose Password">
-      <button class="overlay-button" onclick="createAccount()">Create Account</button>
-    </div>
-  </div>
-
-  <div id="signin-overlay">
-    <div>
-      <h2>Sign In</h2>
-      <input id="signin-username" type="text" placeholder="Username">
-      <input id="signin-password" type="password" placeholder="Password">
-      <button class="overlay-button" onclick="signIn()">Sign In</button>
-    </div>
-  </div>
-</body>
-</html>
+      <input id="signup-username"
