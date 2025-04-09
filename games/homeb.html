@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | Home Base</title>
+    <link rel="shortcut icon" href="https://pr-media.scholastic.com/builds/7702/TemplateData/favicon.ico">
+    <link rel="stylesheet" href="https://pr-media.scholastic.com/builds/7702/TemplateData/style.css">
+    
+
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+    
+    <script>(function() {
+    var channel = 'kidscontent';
+    document.write("<scr" + "ipt id='schheadtag' src='//ltm.scholastic.com/ltm/headtag/kids.scholastic.com/" + channel + "'></scr" + "ipt>");
+  }());</script>
+
+    <style>
+     #onetrust-banner-sdk { display: none; }
+    </style>
+
+    <script>
+var authURL = "https://homebase-api-prod.scholastic.com/";
+      var dataURL = "https://homebase-api-prod.scholastic.com/";
+      var paisURL = "https://embed.cdn.pais.scholastic.com/";
+      var downloadURL = "https://pr-media.scholastic.com/";
+      var newsfeedmediaURL = "https://pr-media-content-approved.scholastic.com/";
+      var refreshToken = getCookie("SPS_RFSH");
+      var newsfeedBuild = "false";
+      var catclubNewsfeed = "false";
+      var dogmanBuild = "false";
+      var badGuysBuild = "false";
+
+      function getCookie(cookieName) {
+        var name = cookieName + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var cookies = decodedCookie.split(';');
+        for(var i = 0; i < cookies.length; i++) {
+          var curr = cookies[i];
+          while (curr.charAt(0) == ' ') {
+            curr = curr.substring(1);
+          }
+          if (curr.indexOf(name) == 0) {
+            return curr.substring(name.length, curr.length);
+          }
+        }
+        return "";
+      };
+
+      var dumbleData = {"omniture":{"domain":{"name":"KC","channel":"KC","experienceType":"Content","experience":"Content","audience":"Kids"},"page":{"name":"Games Home","template":"game","path":"/kids/games/webgames/"},"loginStatus":false,"taxonomy":{"tags":""},"sponsor":{"selectOption":"","sponsorName":"","link":""},"bookDetail":{"bookISBN":""},"article":{"type":""},"video":{"path":"","title":"","play":""},"contributor":{"firstName":"","lastName":""},"question":{"evaluationMode":""},"search":{"keyword":"","resultscount":"","filters":{"filters":{"type":"","value":""}},"sort":""},"self":{"implementation":"kids","version":"1.0"}}}
+
+      function RequestLoginDetails() {
+        if (gameInstance)
+          gameInstance.SendMessage('WebGLLoginHelper', 'SetRefreshToken', refreshToken);
+          gameInstance.SendMessage('WebGLLoginHelper', 'SetAuthURL', authURL);
+          gameInstance.SendMessage('WebGLLoginHelper', 'SetDataURL', dataURL);
+          gameInstance.SendMessage('WebGLLoginHelper', 'SetPAISURL', paisURL);
+          gameInstance.SendMessage('WebGLLoginHelper', 'SetDownloadURL', downloadURL);
+          gameInstance.SendMessage('WebGLLoginHelper', 'SetNewsfeedMediaURL', newsfeedmediaURL);
+          gameInstance.SendMessage('WebGLLoginHelper', 'SetOpenNewsfeedOnPlay', newsfeedBuild);
+          gameInstance.SendMessage('WebGLLoginHelper', 'SetCatClubNewsfeed', catclubNewsfeed);
+         gameInstance.SendMessage('WebGLLoginHelper', 'SetDogManBuild', dogmanBuild);
+          gameInstance.SendMessage('WebGLLoginHelper', 'SetBadGuysBuild', badGuysBuild);
+      };</script>
+
+</head>
+<body>
+    <div id="unity-container" class="unity-desktop">
+        <canvas id="unity-canvas" width=960 height=600></canvas>
+        <div id="unity-loading-bar">
+            <div id="unity-logo"></div>
+            <div id="unity-progress-bar-empty">
+                <div id="unity-progress-bar-full"></div>
+            </div>
+        </div>
+        <div id="unity-mobile-warning">
+            WebGL builds are not supported on mobile devices.
+        </div>
+        <div id="unity-footer">
+            <div id="unity-webgl-logo"></div>
+            <div id="unity-fullscreen-button"></div>
+            <div id="unity-build-title">Home Base</div>
+        </div>
+    </div>
+    <script>var buildUrl = "https://pr-media.scholastic.com/builds/7702/Build";
+      var loaderUrl = buildUrl + "/HomeBase.loader.js";
+      var config = {
+        dataUrl: buildUrl + "/HomeBase.data.unityweb",
+        frameworkUrl: buildUrl + "/HomeBase.framework.js.unityweb",
+        codeUrl: buildUrl + "/HomeBase.wasm.unityweb",
+        streamingAssetsUrl: "https://pr-media.scholastic.com/builds/7702/StreamingAssets",
+        companyName: "Blowfish Studios",
+        productName: "Home Base",
+        productVersion: "3.3.0.4",
+      };
+
+      var container = document.querySelector("#unity-container");
+      var canvas = document.querySelector("#unity-canvas");
+      var loadingBar = document.querySelector("#unity-loading-bar");
+      var progressBarFull = document.querySelector("#unity-progress-bar-full");
+      var fullscreenButton = document.querySelector("#unity-fullscreen-button");
+      var mobileWarning = document.querySelector("#unity-mobile-warning");
+
+      // By default Unity keeps WebGL canvas render target size matched with
+      // the DOM size of the canvas element (scaled by window.devicePixelRatio)
+      // Set this to false if you want to decouple this synchronization from
+      // happening inside the engine, and you would instead like to size up
+      // the canvas DOM size and WebGL render target sizes yourself.
+      // config.matchWebGLToCanvasSize = false;
+
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        container.className = "unity-mobile";
+        // Avoid draining fillrate performance on mobile devices,
+        // and default/override low DPI mode on mobile browsers.
+        config.devicePixelRatio = 1;
+        mobileWarning.style.display = "block";
+        setTimeout(() => {
+          mobileWarning.style.display = "none";
+        }, 5000);
+      } else {
+        canvas.style.width = "960px";
+        canvas.style.height = "600px";
+      }
+      canvas.style.background = "url('https://pr-media.scholastic.com/builds/7702/TemplateData/BG_wNoise.jpg') center / cover";
+      loadingBar.style.display = "block";
+
+      var script = document.createElement("script");
+      script.src = loaderUrl;
+      var gameInstance = null;
+      script.onload = () => {
+        createUnityInstance(canvas, config, (progress) => {
+          progressBarFull.style.width = 100 * progress + "%";
+        }).then((unityInstance) => {
+          gameInstance = unityInstance;
+          loadingBar.style.display = "none";
+          fullscreenButton.onclick = () => {
+            unityInstance.SetFullscreen(1);
+          };
+        }).catch((message) => {
+          alert(message);
+        });
+      };
+      document.body.appendChild(script);</script>
+      <script type="text/javascript" src="https://ltm.scholastic.com/ltm/resources/tag/footer.js"></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"92d3bfc32c9bbd37","serverTiming":{"name":{"cfExtPri":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"version":"2025.3.0","token":"84e946c546cb403a8b48874e651f34d1"}' crossorigin="anonymous"></script>
+</body>
+</html>
