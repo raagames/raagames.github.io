@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Existing metadata and styles -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Step into Raagame2 with Raahil. Enjoy free unblocked games and create your own account to unlock more!">
   <title>Welcome to Raagame2</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;900&display=swap" rel="stylesheet">
   <style>
-    /* Existing styles */
-    /* Dynamic Background */
     body {
       margin: 0;
       overflow: hidden;
@@ -63,7 +60,6 @@
       background: linear-gradient(to bottom right, #FF851B, #FF4136);
     }
 
-    /* Overlay Styles */
     #signup-overlay, #signin-overlay {
       display: none;
       position: fixed;
@@ -105,7 +101,6 @@
       background-color: #FF6309;
     }
 
-    /* New styles for the image */
     .bottom-right {
       position: absolute;
       bottom: 10px;
@@ -166,38 +161,50 @@
 
     function showSignUpForm() {
       document.getElementById('signup-overlay').style.display = "flex";
+      document.body.style.overflow = "auto"; // Allow input focus
+    }
+
+    function showSignInForm() {
+      document.getElementById('signin-overlay').style.display = "flex";
+      document.body.style.overflow = "auto"; // Allow input focus
+    }
+
+    function hideOverlays() {
+      document.getElementById('signup-overlay').style.display = "none";
+      document.getElementById('signin-overlay').style.display = "none";
+      document.body.style.overflow = "hidden"; // Restore overflow restriction
     }
 
     function createAccount() {
       const username = document.getElementById('signup-username').value.trim();
       const password = document.getElementById('signup-password').value;
+
       if (!username || !password) {
         alert("Please fill in all fields.");
         return;
       }
+
       const accounts = JSON.parse(localStorage.getItem('accounts') || "{}");
       if (accounts[username]) {
         alert("Username already exists. Please choose another.");
         return;
       }
+
       accounts[username] = { password };
       localStorage.setItem("accounts", JSON.stringify(accounts));
       alert("Account created successfully!");
-      document.getElementById('signup-overlay').style.display = "none";
-    }
-
-    function showSignInForm() {
-      document.getElementById('signin-overlay').style.display = "flex";
+      hideOverlays();
     }
 
     function signIn() {
       const username = document.getElementById('signin-username').value.trim();
       const password = document.getElementById('signin-password').value;
+
       const accounts = JSON.parse(localStorage.getItem('accounts') || "{}");
       if (accounts[username] && accounts[username].password === password) {
         alert("Sign In successful!");
         localStorage.setItem("signedIn", "true");
-        document.getElementById('signin-overlay').style.display = "none";
+        hideOverlays();
       } else {
         alert("Incorrect username or password.");
       }
@@ -217,36 +224,26 @@
     </div>
   </div>
 
-  <!-- Sign-Up Overlay -->
   <div id="signup-overlay">
     <div>
       <h2>Create a New Account</h2>
       <input id="signup-username" type="text" placeholder="Choose Username">
       <input id="signup-password" type="password" placeholder="Choose Password">
       <button class="overlay-button" onclick="createAccount()">Create Account</button>
+      <button class="overlay-button" onclick="hideOverlays()">Close</button>
     </div>
   </div>
 
-  <!-- Sign-In Overlay -->
   <div id="signin-overlay">
     <div>
       <h2>Sign In</h2>
       <input id="signin-username" type="text" placeholder="Username">
       <input id="signin-password" type="password" placeholder="Password">
       <button class="overlay-button" onclick="signIn()">Sign In</button>
+      <button class="overlay-button" onclick="hideOverlays()">Close</button>
     </div>
   </div>
 
-<!-- displaytext -->
-  <div id="cu">
-    <div>
-      <h2>Info</h2>
-      <h1>This is a game with all of the scholastic characters.Including Dog Man!Be patient when it is loading,it might take time.It is called home base.</h1>
-       <button class="game-button home-base" onclick="checkAccess('games', 'https://raagames.github.io/games/homeb.html')">Play Home Base</button>
-    </div>
-  </div>
-
-  <!-- Bottom right image -->
   <img src="https://raagames.github.io/raagames.png" class="bottom-right" alt="Raagames Logo">
 </body>
 </html>
