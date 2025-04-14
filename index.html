@@ -60,6 +60,46 @@
       background: linear-gradient(to bottom right, #FF851B, #FF4136);
     }
 
+    .popup {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+      padding: 16px;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      display: none;
+      z-index: 1000;
+    }
+
+    .blue-popup {
+      background-color: #d1ecf1;
+      color: #0c5460;
+      border: 1px solid #bee5eb;
+    }
+
+    .countdown-bar {
+      height: 5px;
+      background-color: #f5c6cb;
+      margin-top: 8px;
+      animation: countdown 3s linear forwards;
+    }
+
+    .blue-popup .countdown-bar {
+      background-color: #bee5eb;
+    }
+
+    @keyframes countdown {
+      from {
+        width: 100%;
+      }
+      to {
+        width: 0;
+      }
+    }
+
     #signup-overlay, #signin-overlay {
       display: none;
       position: fixed;
@@ -111,68 +151,83 @@
   </style>
 
   <script>
-    function openWithGameEmbed(gameUrl, gameName) {
-      const gameWindow = window.open("about:blank", "_blank", "width=800,height=600");
-      if (gameWindow) {
-        gameWindow.document.write(`
-          <!DOCTYPE html>
-          <html>
-          <head>
-            <title>${gameName}</title>
-            <style>
-              body {
-                margin: 0;
-                background: black;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-              }
-              iframe {
-                width: 100%;
-                height: 100%;
-                border: none;
-              }
-            </style>
-          </head>
-          <body>
-            <iframe src="${gameUrl}" allowfullscreen></iframe>
-          </body>
-          </html>
-        `);
-      } else {
-        alert("Popup blocked or failed to open.");
-      }
+    function showPopup(message, duration, isBlue = false) {
+      const popup = document.createElement('div');
+      popup.className = `popup ${isBlue ? 'blue-popup' : ''}`;
+      popup.innerHTML = `
+        <span>${message}</span>
+        <div class="countdown-bar" style="animation-duration: ${duration / 1000}s;"></div>
+      `;
+      document.body.appendChild(popup);
+      popup.style.display = 'block';
+
+      setTimeout(() => {
+        popup.style.display = 'none';
+        popup.remove();
+      }, duration);
+    }
+
+    function launchGameWithCountdown(game, url) {
+      showPopup("Game will launch in 3...", 3000, true); // Blue popup
+      setTimeout(() => {
+        const gameWindow = window.open("about:blank", "_blank", "width=800,height=600");
+        if (gameWindow) {
+          gameWindow.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+              <title>${game}</title>
+              <style>
+                body {
+                  margin: 0;
+                  background: black;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  height: 100vh;
+                }
+                iframe {
+                  width: 100%;
+                  height: 100%;
+                  border: none;
+                }
+              </style>
+            </head>
+            <body>
+              <iframe src="${url}" allowfullscreen></iframe>
+            </body>
+            </html>
+          `);
+        } else {
+          showPopup("Popup blocked or failed to open.", 5000);
+        }
+      }, 3000);
     }
 
     function checkAccess(game, url) {
       const signedIn = localStorage.getItem("signedIn");
       if (signedIn === "true") {
-        if (game === 'Minecraft') {
-          window.open(url, "_blank", "width=800,height=600");
-        } else {
-          openWithGameEmbed(url, game);
-        }
+        launchGameWithCountdown(game, url);
       } else {
-        alert(`Please sign in to access ${game}.`);
+        showPopup(`Please sign in to access ${game}.`, 5000);
         showSignInForm();
       }
     }
 
     function showSignUpForm() {
       document.getElementById('signup-overlay').style.display = "flex";
-      document.body.style.overflow = "auto"; // Allow input focus
+      document.body.style.overflow = "auto";
     }
 
     function showSignInForm() {
       document.getElementById('signin-overlay').style.display = "flex";
-      document.body.style.overflow = "auto"; // Allow input focus
+      document.body.style.overflow = "auto";
     }
 
     function hideOverlays() {
       document.getElementById('signup-overlay').style.display = "none";
       document.getElementById('signin-overlay').style.display = "none";
-      document.body.style.overflow = "hidden"; // Restore overflow restriction
+      document.body.style.overflow = "hidden";
     }
 
     function createAccount() {
@@ -180,19 +235,19 @@
       const password = document.getElementById('signup-password').value;
 
       if (!username || !password) {
-        alert("Please fill in all fields.");
+        showPopup("Please fill in all fields.", 5000);
         return;
       }
 
       const accounts = JSON.parse(localStorage.getItem('accounts') || "{}");
       if (accounts[username]) {
-        alert("Username already exists. Please choose another.");
+        showPopup("Username already exists. Please choose another.", 5000);
         return;
       }
 
       accounts[username] = { password };
       localStorage.setItem("accounts", JSON.stringify(accounts));
-      alert("Account created successfully!");
+      showPopup("Account created successfully!", 5000);
       hideOverlays();
     }
 
@@ -202,11 +257,11 @@
 
       const accounts = JSON.parse(localStorage.getItem('accounts') || "{}");
       if (accounts[username] && accounts[username].password === password) {
-        alert("Sign In successful!");
+        showPopup("Sign In successful!", 5000);
         localStorage.setItem("signedIn", "true");
         hideOverlays();
       } else {
-        alert("Incorrect username or password.");
+        showPopup("Incorrect username or password.", 5000);
       }
     }
   </script>
@@ -244,12 +299,12 @@
     </div>
   </div>
 
-  <!-- Additional Info Section -->
+  <!-- Info Section -->
   <div id="cu">
     <div>
       <h2>Info</h2>
       <h1>This is a game with all of the scholastic characters. Including Dog Man! Be patient when it is loading, it might take time. It is called home base.</h1>
-      <button class="game-button home-base" onclick="checkAccess('games', 'https://raagames.github.io/games/homeb.html')">Play Home Base</button>
+      <button class="game-button home-base" onclick="checkAccess('Home Base', 'https://raagames.github.io/games/homeb.html')">Play Home Base</button>
     </div>
   </div>
 
