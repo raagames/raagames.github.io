@@ -1,0 +1,314 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Step into Raagame2 with Raahil. Enjoy free unblocked games and create your own account to unlock more!">
+  <title>Welcome to Raagame2</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at center, #00C6FF, #005FFF);
+      background-size: 400% 400%;
+      animation: swirl 10s linear infinite;
+      color: white;
+      position: relative;
+    }
+
+    @keyframes swirl {
+      0% { background-position: 0 0; }
+      100% { background-position: 300% 300%; }
+    }
+
+    .button-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 50px;
+    }
+
+    .game-button, .auth-button {
+      width: 200px;
+      height: 50px;
+      border: none;
+      border-radius: 15px;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      cursor: pointer;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+      color: white;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .game-button:hover, .auth-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .raagame3 { background: linear-gradient(to bottom right, #FF5733, #C70039); }
+    .popit-master { background: linear-gradient(to bottom right, #33FF57, #28A745); }
+    .minecraft { background: linear-gradient(to bottom right, #FFC300, #FF5733); }
+    .survival-race { background: linear-gradient(to bottom right, #33C3FF, #0074D9); }
+    .home-base { background: linear-gradient(to bottom right, #33C3FF, #0074D9); }
+
+    .auth-button {
+      background: linear-gradient(to bottom right, #FF851B, #FF4136);
+    }
+
+    .popup {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+      padding: 16px;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      display: none;
+      z-index: 1000;
+    }
+
+    .blue-popup {
+      background-color: #d1ecf1;
+      color: #0c5460;
+      border: 1px solid #bee5eb;
+    }
+
+    .countdown-bar {
+      height: 5px;
+      background-color: #f5c6cb;
+      margin-top: 8px;
+      animation: countdown 3s linear forwards;
+    }
+
+    .blue-popup .countdown-bar {
+      background-color: #bee5eb;
+    }
+
+    @keyframes countdown {
+      from {
+        width: 100%;
+      }
+      to {
+        width: 0;
+      }
+    }
+
+    #signup-overlay, #signin-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 10000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #signup-overlay div, #signin-overlay div {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      max-width: 300px;
+    }
+
+    input {
+      padding: 8px;
+      margin: 10px 0;
+      font-size: 1rem;
+      width: 90%;
+    }
+
+    button.overlay-button {
+      padding: 8px 16px;
+      font-size: 1rem;
+      background-color: #FF851B;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+
+    button.overlay-button:hover {
+      background-color: #FF6309;
+    }
+
+    .bottom-right {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      width: 100px;
+      height: auto;
+    }
+  </style>
+
+  <script>
+    function showPopup(message, duration, isBlue = false) {
+      const popup = document.createElement('div');
+      popup.className = `popup ${isBlue ? 'blue-popup' : ''}`;
+      popup.innerHTML = `
+        <span>${message}</span>
+        <div class="countdown-bar" style="animation-duration: ${duration / 1000}s;"></div>
+      `;
+      document.body.appendChild(popup);
+      popup.style.display = 'block';
+
+      setTimeout(() => {
+        popup.style.display = 'none';
+        popup.remove();
+      }, duration);
+    }
+
+    function launchGameWithCountdown(game, url) {
+      showPopup("Game will launch in 3...", 3000, true); // Blue popup
+      setTimeout(() => {
+        const gameWindow = window.open("about:blank", "_blank", "width=800,height=600");
+        if (gameWindow) {
+          gameWindow.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+              <title>${game}</title>
+              <style>
+                body {
+                  margin: 0;
+                  background: black;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  height: 100vh;
+                }
+                iframe {
+                  width: 100%;
+                  height: 100%;
+                  border: none;
+                }
+              </style>
+            </head>
+            <body>
+              <iframe src="${url}" allowfullscreen></iframe>
+            </body>
+            </html>
+          `);
+        } else {
+          showPopup("Popup blocked or failed to open.", 5000);
+        }
+      }, 3000);
+    }
+
+    function checkAccess(game, url) {
+      const signedIn = localStorage.getItem("signedIn");
+      if (signedIn === "true") {
+        launchGameWithCountdown(game, url);
+      } else {
+        showPopup(`Please sign in to access ${game}.`, 5000);
+        showSignInForm();
+      }
+    }
+
+    function showSignUpForm() {
+      document.getElementById('signup-overlay').style.display = "flex";
+      document.body.style.overflow = "auto";
+    }
+
+    function showSignInForm() {
+      document.getElementById('signin-overlay').style.display = "flex";
+      document.body.style.overflow = "auto";
+    }
+
+    function hideOverlays() {
+      document.getElementById('signup-overlay').style.display = "none";
+      document.getElementById('signin-overlay').style.display = "none";
+      document.body.style.overflow = "hidden";
+    }
+
+    function createAccount() {
+      const username = document.getElementById('signup-username').value.trim();
+      const password = document.getElementById('signup-password').value;
+
+      if (!username || !password) {
+        showPopup("Please fill in all fields.", 5000);
+        return;
+      }
+
+      const accounts = JSON.parse(localStorage.getItem('accounts') || "{}");
+      if (accounts[username]) {
+        showPopup("Username already exists. Please choose another.", 5000);
+        return;
+      }
+
+      accounts[username] = { password };
+      localStorage.setItem("accounts", JSON.stringify(accounts));
+      showPopup("Account created successfully!", 5000);
+      hideOverlays();
+    }
+
+    function signIn() {
+      const username = document.getElementById('signin-username').value.trim();
+      const password = document.getElementById('signin-password').value;
+
+      const accounts = JSON.parse(localStorage.getItem('accounts') || "{}");
+      if (accounts[username] && accounts[username].password === password) {
+        showPopup("Sign In successful!", 5000);
+        localStorage.setItem("signedIn", "true");
+        hideOverlays();
+      } else {
+        showPopup("Incorrect username or password.", 5000);
+      }
+    }
+  </script>
+</head>
+<body>
+  <div>
+    <h1>Welcome to Raagame2!</h1>
+    <div class="button-container">
+      <button class="game-button raagame3" onclick="checkAccess('Google Classroom', 'https://teams.live.com/v2/')">Play team</button>
+      <button class="game-button popit-master" onclick="checkAccess('Pop It Master', 'https://raagames.github.io/popit/index.html')">Play Pop It Master</button>
+      <button class="game-button minecraft" onclick="checkAccess('Minecraft', 'https://raagames.github.io/games/minecraft.html')">Play Minecraft</button>
+      <button class="game-button survival-race" onclick="checkAccess('Survival Race', 'https://www.survivalrace.net')">Play Survival Race</button>
+      <button class="auth-button" onclick="showSignUpForm()">Sign Up</button>
+      <button class="auth-button" onclick="showSignInForm()">Sign In</button>
+    </div>
+  </div>
+
+  <div id="signup-overlay">
+    <div>
+      <h2>Create a New Account</h2>
+      <input id="signup-username" type="text" placeholder="Choose Username">
+      <input id="signup-password" type="password" placeholder="Choose Password">
+      <button class="overlay-button" onclick="createAccount()">Create Account</button>
+      <button class="overlay-button" onclick="hideOverlays()">Close</button>
+    </div>
+  </div>
+
+  <div id="signin-overlay">
+    <div>
+      <h2>Sign In</h2>
+      <input id="signin-username" type="text" placeholder="Username">
+      <input id="signin-password" type="password" placeholder="Password">
+      <button class="overlay-button" onclick="signIn()">Sign In</button>
+      <button class="overlay-button" onclick="hideOverlays()">Close</button>
+    </div>
+  </div>
+
+  <!-- Info Section -->
+  <div id="cu">
+    <div>
+      <h2>Info</h2>
+      <h1>additional apps</h1>
+      <button class="game-button home-base" onclick="checkAccess('Clever', 'https://raagames.github.io/games/homeb.html')">Play Home Base</button>
+    </div>
+  </div>
+
+  <img src="https://raagames.github.io/raagames.png" class="bottom-right" alt="Raagames Logo">
+</body>
+</html>
