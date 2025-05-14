@@ -224,6 +224,8 @@
 
       if (message.includes("hi") || message.includes("hello")) {
         response = "Hey there! Need help playing a game?";
+      } else if (message.includes("yes")) {
+        response = "Sure!,Tell me what you need";
       } else if (message.includes("help")) {
         response = "Sure! You can click any game above to play, just sign in first!";
       } else if (message.includes("game") || message.includes("play")) {
