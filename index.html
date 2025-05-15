@@ -80,6 +80,7 @@
       border-radius: 10px;
       text-align: center;
       max-width: 300px;
+      color: black; /* Ensures text is visible */
     }
 
     #game-modal button {
@@ -108,7 +109,7 @@
   <div>
     <h1>Welcome to Raagame2!</h1>
     <div class="button-container">
-      <button class="game-button raagame3" onclick="showGameModal('Raagame3', 'https://www.kogama.com/')">Play Raagame3</button>
+      <button class="game-button raagame3" onclick="showGameModal('Google Classroom', 'https://www.kogama.com/')">Play Raagame3</button>
       <button class="game-button popit-master" onclick="showGameModal('Pop It Master', 'https://raagames.github.io/popit/index.html')">Play Pop It Master</button>
       <button class="game-button minecraft" onclick="showGameModal('Minecraft', 'https://raagames.github.io/games/minecraft.html')">Play Minecraft</button>
       <button class="game-button survival-race" onclick="showGameModal('Survival Race', 'https://www.survivalrace.net')">Play Survival Race</button>
@@ -136,7 +137,8 @@
     }
 
     function launchGame() {
-      const newWindow = window.open('about:blank', '_blank');
+      // Open the game in a new about:blank window with custom dimensions
+      const newWindow = window.open('about:blank', '_blank', 'width=800,height=600');
       if (newWindow) {
         newWindow.location.href = selectedGameUrl;
       } else {
@@ -152,6 +154,14 @@
     function closeModal() {
       document.getElementById('game-modal').style.display = 'none';
       selectedGameUrl = ""; // Clear the stored URL
+    }
+
+    function showSignUpForm() {
+      alert("Sign-up functionality coming soon!");
+    }
+
+    function showSignInForm() {
+      alert("Sign-in functionality coming soon!");
     }
   </script>
 </body>
