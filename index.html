@@ -60,46 +60,6 @@
       background: linear-gradient(to bottom right, #FF851B, #FF4136);
     }
 
-    .popup {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background-color: #f8d7da;
-      color: #721c24;
-      border: 1px solid #f5c6cb;
-      padding: 16px;
-      border-radius: 4px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-      display: none;
-      z-index: 1000;
-    }
-
-    .blue-popup {
-      background-color: #d1ecf1;
-      color: #0c5460;
-      border: 1px solid #bee5eb;
-    }
-
-    .countdown-bar {
-      height: 5px;
-      background-color: #f5c6cb;
-      margin-top: 8px;
-      animation: countdown 3s linear forwards;
-    }
-
-    .blue-popup .countdown-bar {
-      background-color: #bee5eb;
-    }
-
-    @keyframes countdown {
-      from {
-        width: 100%;
-      }
-      to {
-        width: 0;
-      }
-    }
-
     #signup-overlay, #signin-overlay {
       display: none;
       position: fixed;
@@ -202,6 +162,28 @@
     </div>
   </div>
 
+  <!-- Sign-Up Overlay -->
+  <div id="signup-overlay">
+    <div>
+      <h2>Sign Up</h2>
+      <input type="text" placeholder="Username" />
+      <input type="password" placeholder="Password" />
+      <button class="overlay-button" onclick="hideOverlay('signup-overlay')">Submit</button>
+      <button class="overlay-button" onclick="hideOverlay('signup-overlay')">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Sign-In Overlay -->
+  <div id="signin-overlay">
+    <div>
+      <h2>Sign In</h2>
+      <input type="text" placeholder="Username" />
+      <input type="password" placeholder="Password" />
+      <button class="overlay-button" onclick="hideOverlay('signin-overlay')">Submit</button>
+      <button class="overlay-button" onclick="hideOverlay('signin-overlay')">Cancel</button>
+    </div>
+  </div>
+
   <!-- AI Chatbot -->
   <div id="ai-chatbot">
     <div>🎮 Raagame2 Assistant</div>
@@ -211,6 +193,37 @@
   </div>
 
   <script>
+    // Function to handle button access logic
+    function checkAccess(gameName, gameUrl) {
+      if (confirm(`Do you want to play ${gameName}?`)) {
+        window.location.href = gameUrl; // Redirect to the game URL
+      }
+    }
+
+    // Function to show the sign-up overlay
+    function showSignUpForm() {
+      const overlay = document.getElementById("signup-overlay");
+      if (overlay) {
+        overlay.style.display = "flex";
+      }
+    }
+
+    // Function to show the sign-in overlay
+    function showSignInForm() {
+      const overlay = document.getElementById("signin-overlay");
+      if (overlay) {
+        overlay.style.display = "flex";
+      }
+    }
+
+    // Function to hide overlays (common for both sign-up and sign-in)
+    function hideOverlay(overlayId) {
+      const overlay = document.getElementById(overlayId);
+      if (overlay) {
+        overlay.style.display = "none";
+      }
+    }
+
     function respondFakeAI() {
       const input = document.getElementById("user-input");
       const chatLog = document.getElementById("chat-log");
