@@ -54,7 +54,6 @@
     .popit-master { background: linear-gradient(to bottom right, #33FF57, #28A745); }
     .minecraft { background: linear-gradient(to bottom right, #FFC300, #FF5733); }
     .survival-race { background: linear-gradient(to bottom right, #33C3FF, #0074D9); }
-    .home-base { background: linear-gradient(to bottom right, #33C3FF, #0074D9); }
 
     .auth-button {
       background: linear-gradient(to bottom right, #FF851B, #FF4136);
@@ -80,7 +79,7 @@
       border-radius: 10px;
       text-align: center;
       max-width: 300px;
-      color: black; /* Ensures text is visible */
+      color: black;
     }
 
     #game-modal button {
@@ -109,7 +108,7 @@
   <div>
     <h1>Welcome to Raagame2!</h1>
     <div class="button-container">
-      <button class="game-button raagame3" onclick="showGameModal('Google Classroom', 'https://www.kogama.com/')">Play Raagame3</button>
+      <button class="game-button raagame3" onclick="showGameModal('Raagame3', 'https://www.kogama.com/')">Play Raagame3</button>
       <button class="game-button popit-master" onclick="showGameModal('Pop It Master', 'https://raagames.github.io/popit/index.html')">Play Pop It Master</button>
       <button class="game-button minecraft" onclick="showGameModal('Minecraft', 'https://raagames.github.io/games/minecraft.html')">Play Minecraft</button>
       <button class="game-button survival-race" onclick="showGameModal('Survival Race', 'https://www.survivalrace.net')">Play Survival Race</button>
@@ -137,10 +136,24 @@
     }
 
     function launchGame() {
-      // Open the game in a new about:blank window with custom dimensions
+      // Open a new about:blank window and embed the game URL in an iframe
       const newWindow = window.open('about:blank', '_blank', 'width=800,height=600');
       if (newWindow) {
-        newWindow.location.href = selectedGameUrl;
+        newWindow.document.write(`
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <title>Google Classroom</title>
+            <style>
+              body { margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background: #000; }
+              iframe { width: 100%; height: 100%; border: none; }
+            </style>
+          </head>
+          <body>
+            <iframe src="${selectedGameUrl}" allowfullscreen></iframe>
+          </body>
+          </html>
+        `);
       } else {
         alert("Pop-up blocked! Please allow pop-ups for this site.");
       }
