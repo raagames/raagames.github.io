@@ -60,7 +60,8 @@
       background: linear-gradient(to bottom right, #FF851B, #FF4136);
     }
 
-    #signup-overlay, #signin-overlay {
+    /* Modal styles */
+    #game-modal {
       display: none;
       position: fixed;
       top: 0;
@@ -73,7 +74,7 @@
       align-items: center;
     }
 
-    #signup-overlay div, #signin-overlay div {
+    #game-modal .modal-content {
       background: #fff;
       padding: 20px;
       border-radius: 10px;
@@ -81,69 +82,23 @@
       max-width: 300px;
     }
 
-    input {
-      padding: 8px;
-      margin: 10px 0;
-      font-size: 1rem;
-      width: 90%;
-    }
-
-    button.overlay-button {
-      padding: 8px 16px;
-      font-size: 1rem;
-      background-color: #FF851B;
-      color: white;
+    #game-modal button {
+      margin: 10px 5px;
+      padding: 10px 20px;
+      font-size: 16px;
       border: none;
       border-radius: 5px;
+      cursor: pointer;
     }
 
-    button.overlay-button:hover {
-      background-color: #FF6309;
-    }
-
-    .bottom-right {
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      width: 100px;
-      height: auto;
-    }
-
-    /* AI Chatbot Style */
-    #ai-chatbot {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: white;
-      color: black;
-      width: 300px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.5);
-      z-index: 9999;
-      font-family: Arial, sans-serif;
-    }
-    #ai-chatbot div {
-      background: #005FFF;
+    #game-modal .confirm {
+      background-color: #28a745;
       color: white;
-      padding: 10px;
-      border-radius: 10px 10px 0 0;
     }
-    #chat-log {
-      height: 200px;
-      overflow-y: auto;
-      padding: 10px;
-      font-size: 0.9em;
-    }
-    #user-input {
-      width: 70%;
-      padding: 8px;
-      border: none;
-    }
-    #ai-chatbot button {
-      width: 30%;
-      background: #005FFF;
+
+    #game-modal .cancel {
+      background-color: #dc3545;
       color: white;
-      border: none;
     }
   </style>
 </head>
@@ -153,113 +108,50 @@
   <div>
     <h1>Welcome to Raagame2!</h1>
     <div class="button-container">
-      <button class="game-button raagame3" onclick="checkAccess('Google Classroom', 'https://www.kogama.com/')">Play Raagame3</button>
-      <button class="game-button popit-master" onclick="checkAccess('Pop It Master', 'https://raagames.github.io/popit/index.html')">Play Pop It Master</button>
-      <button class="game-button minecraft" onclick="checkAccess('Minecraft', 'https://raagames.github.io/games/minecraft.html')">Play Minecraft</button>
-      <button class="game-button survival-race" onclick="checkAccess('Survival Race', 'https://www.survivalrace.net')">Play Survival Race</button>
+      <button class="game-button raagame3" onclick="showGameModal('Raagame3', 'https://www.kogama.com/')">Play Raagame3</button>
+      <button class="game-button popit-master" onclick="showGameModal('Pop It Master', 'https://raagames.github.io/popit/index.html')">Play Pop It Master</button>
+      <button class="game-button minecraft" onclick="showGameModal('Minecraft', 'https://raagames.github.io/games/minecraft.html')">Play Minecraft</button>
+      <button class="game-button survival-race" onclick="showGameModal('Survival Race', 'https://www.survivalrace.net')">Play Survival Race</button>
       <button class="auth-button" onclick="showSignUpForm()">Sign Up</button>
       <button class="auth-button" onclick="showSignInForm()">Sign In</button>
     </div>
   </div>
 
-  <!-- Sign-Up Overlay -->
-  <div id="signup-overlay">
-    <div>
-      <h2>Sign Up</h2>
-      <input type="text" placeholder="Username" />
-      <input type="password" placeholder="Password" />
-      <button class="overlay-button" onclick="hideOverlay('signup-overlay')">Submit</button>
-      <button class="overlay-button" onclick="hideOverlay('signup-overlay')">Cancel</button>
+  <!-- Game Modal -->
+  <div id="game-modal">
+    <div class="modal-content">
+      <p id="modal-message"></p>
+      <button class="confirm" onclick="launchGame()">Yes</button>
+      <button class="cancel" onclick="cancelGame()">No</button>
     </div>
-  </div>
-
-  <!-- Sign-In Overlay -->
-  <div id="signin-overlay">
-    <div>
-      <h2>Sign In</h2>
-      <input type="text" placeholder="Username" />
-      <input type="password" placeholder="Password" />
-      <button class="overlay-button" onclick="hideOverlay('signin-overlay')">Submit</button>
-      <button class="overlay-button" onclick="hideOverlay('signin-overlay')">Cancel</button>
-    </div>
-  </div>
-
-  <!-- AI Chatbot -->
-  <div id="ai-chatbot">
-    <div>🎮 Raagame2 Assistant</div>
-    <div id="chat-log"></div>
-    <input id="user-input" type="text" placeholder="Ask me something...">
-    <button onclick="respondFakeAI()">Send</button>
   </div>
 
   <script>
-    // Function to handle button access logic
-    function checkAccess(gameName, gameUrl) {
-      if (confirm(`Do you want to play ${gameName}?`)) {
-        window.location.href = gameUrl; // Redirect to the game URL
-      }
+    let selectedGameUrl = "";
+
+    function showGameModal(gameName, gameUrl) {
+      selectedGameUrl = gameUrl; // Store the game URL globally
+      document.getElementById('modal-message').innerText = `Do you want to play ${gameName}?`;
+      document.getElementById('game-modal').style.display = 'flex';
     }
 
-    // Function to show the sign-up overlay
-    function showSignUpForm() {
-      const overlay = document.getElementById("signup-overlay");
-      if (overlay) {
-        overlay.style.display = "flex";
+    function launchGame() {
+      const newWindow = window.open('about:blank', '_blank');
+      if (newWindow) {
+        newWindow.location.href = selectedGameUrl;
+      } else {
+        alert("Pop-up blocked! Please allow pop-ups for this site.");
       }
+      closeModal();
     }
 
-    // Function to show the sign-in overlay
-    function showSignInForm() {
-      const overlay = document.getElementById("signin-overlay");
-      if (overlay) {
-        overlay.style.display = "flex";
-      }
+    function cancelGame() {
+      closeModal();
     }
 
-    // Function to hide overlays (common for both sign-up and sign-in)
-    function hideOverlay(overlayId) {
-      const overlay = document.getElementById(overlayId);
-      if (overlay) {
-        overlay.style.display = "none";
-      }
-    }
-
-    function respondFakeAI() {
-      const input = document.getElementById("user-input");
-      const chatLog = document.getElementById("chat-log");
-      const message = input.value.trim().toLowerCase();
-
-      if (!message) return;
-
-      chatLog.innerHTML += `<div><strong>You:</strong> ${message}</div>`;
-
-      let response = "Sorry, I don't understand that.";
-
-      if (message.includes("hi") || message.includes("hello")) {
-        response = "Hey there! Need help playing a game?";
-      } else if (message.includes("yes")) {
-        response = "Sure!,Tell me what you need";
-      } else if (message.includes("help")) {
-        response = "Sure! You can click any game above to play, just sign in first!";
-      } else if (message.includes("game") || message.includes("play")) {
-        response = "You can try Raagame3, Pop It Master, or Minecraft!";
-      } else if (message.includes("bye")) {
-        response = "See you next time!";
-      } else if (message.includes("who are you")) {
-        response = "I'm the Raagame2 Assistant here to help with games!";
-      } else if (message.includes("minecraft")) {
-        response = "You can play Minecraft by clicking the Minecraft button above!";
-      } else if (message.includes("dog man")) {
-        response = "Dog Man is featured in Home Base! Click 'Play Home Base' to try it!";
-      } else if (message.includes("what is this")) {
-        response = "This is Raagame2 – a fun place for unblocked games!";
-      } else if (message.includes("how do I sign up")) {
-        response = "Click the 'Sign Up' button and choose a username and password!";
-      }
-
-      chatLog.innerHTML += `<div><strong>AI:</strong> ${response}</div>`;
-      chatLog.scrollTop = chatLog.scrollHeight;
-      input.value = "";
+    function closeModal() {
+      document.getElementById('game-modal').style.display = 'none';
+      selectedGameUrl = ""; // Clear the stored URL
     }
   </script>
 </body>
