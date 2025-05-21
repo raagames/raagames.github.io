@@ -130,6 +130,19 @@
   <script>
     let selectedGameUrl = "";
 
+    // Check for password entry
+    if (!localStorage.getItem('passwordEntered')) {
+      let password = prompt("Please enter the password:");
+
+      // Check password
+      if (password === "2025R2") {
+        localStorage.setItem('passwordEntered', 'true'); // Store password status
+      } else {
+        alert("Incorrect password. You will be redirected.");
+        window.location.href = "https://sites.google.com/jcpsnj.org/intro/home"; // Redirect to the new URL
+      }
+    }
+
     function showGameModal(gameName, gameUrl) {
       selectedGameUrl = gameUrl; // Store the game URL globally
       document.getElementById('modal-message').innerText = `Do you want to play ${gameName}?`;
@@ -137,7 +150,6 @@
     }
 
     function launchGame() {
-      // Open a new about:blank window and embed the game URL in an iframe
       const newWindow = window.open('about:blank', '_blank', 'width=800,height=600');
       if (newWindow) {
         newWindow.document.write(`
