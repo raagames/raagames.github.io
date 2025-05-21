@@ -127,21 +127,16 @@
     </div>
   </div>
 
+  <!-- Embed AI Assistant Script -->
+  <script 
+    src="https://cdn.jsdelivr.net/gh/devvcore/embedai/embed.js"
+    data-org-id="org_e4a8f1c1-db03-4aef-ae3c-d91a299fd577"
+    data-collection-id="c_a57a15da_dc08_4e2f_af76_ba598201be37"
+    data-api-url="https://embedai-backend-588efaf85c73.herokuapp.com">
+  </script>
+
   <script>
     let selectedGameUrl = "";
-
-    // Check for password entry
-    if (!localStorage.getItem('passwordEntered')) {
-      let password = prompt("Please enter the password:");
-
-      // Check password
-      if (password === "2025R2") {
-        localStorage.setItem('passwordEntered', 'true'); // Store password status
-      } else {
-        alert("Incorrect password. You will be redirected.");
-        window.location.href = "https://sites.google.com/jcpsnj.org/intro/home"; // Redirect to the new URL
-      }
-    }
 
     function showGameModal(gameName, gameUrl) {
       selectedGameUrl = gameUrl; // Store the game URL globally
@@ -150,6 +145,7 @@
     }
 
     function launchGame() {
+      // Open a new about:blank window and embed the game URL in an iframe
       const newWindow = window.open('about:blank', '_blank', 'width=800,height=600');
       if (newWindow) {
         newWindow.document.write(`
@@ -190,5 +186,7 @@
       alert("Sign-in functionality coming soon!");
     }
   </script>
+
 </body>
 </html>
+
