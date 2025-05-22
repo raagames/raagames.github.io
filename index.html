@@ -187,6 +187,15 @@
     }
   </script>
 
+  <!-- Password Prompt Script (Added without removing anything) -->
+  <script>
+    window.addEventListener('load', function () {
+      const password = prompt("Enter the password to access this site:");
+      if (password !== "2025R2") {
+        window.location.href = "https://sites.google.com/jcpsnj.org/intro/home";
+      }
+    });
+  </script>
+
 </body>
 </html>
-
