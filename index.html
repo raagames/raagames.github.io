@@ -107,7 +107,7 @@
   <!-- Main Buttons -->
   <div>
     <h1>Welcome to Raagame2!</h1>
-    <h2>go to https://sites.google.com/jcpsnj.org/intro/home for an intro</h2>
+    <h2>Go to <a href="https://sites.google.com/jcpsnj.org/intro/home">intro</a> for more info</h2>
     <div class="button-container">
       <button class="game-button raagame3" onclick="showGameModal('Raagame3', 'https://www.kogama.com/')">Play Raagame3</button>
       <button class="game-button popit-master" onclick="showGameModal('Pop It Master', 'https://raagames.github.io/popit/index.html')">Play Pop It Master</button>
@@ -137,22 +137,23 @@
 
   <script>
     let selectedGameUrl = "";
+    let customTitle = "Game Window"; // Default title
 
     function showGameModal(gameName, gameUrl) {
       selectedGameUrl = gameUrl; // Store the game URL globally
+      customTitle = prompt("Enter a title for the game window:", gameName) || gameName; // Allow user to customize the title
       document.getElementById('modal-message').innerText = `Do you want to play ${gameName}?`;
       document.getElementById('game-modal').style.display = 'flex';
     }
 
     function launchGame() {
-      // Open a new about:blank window and embed the game URL in an iframe
       const newWindow = window.open('about:blank', '_blank', 'width=800,height=600');
       if (newWindow) {
         newWindow.document.write(`
           <!DOCTYPE html>
           <html lang="en">
           <head>
-            <title>Google Classroom</title>
+            <title>${customTitle}</title> <!-- Dynamic title -->
             <style>
               body { margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background: #000; }
               iframe { width: 100%; height: 100%; border: none; }
@@ -177,24 +178,6 @@
       document.getElementById('game-modal').style.display = 'none';
       selectedGameUrl = ""; // Clear the stored URL
     }
-
-    function showSignUpForm() {
-      alert("Sign-up functionality coming soon!");
-    }
-
-    function showSignInForm() {
-      alert("Sign-in functionality coming soon!");
-    }
-  </script>
-
-  <!-- Password Prompt Script (Added without removing anything) -->
-  <script>
-    window.addEventListener('load', function () {
-      const password = prompt("Enter the password to access this site:");
-      if (password !== "2025R2") {
-        window.location.href = "https://sites.google.com/jcpsnj.org/intro/home";
-      }
-    });
   </script>
 
 </body>
